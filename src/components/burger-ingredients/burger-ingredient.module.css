@@ -1,5 +1,19 @@
+a {
+    text-decoration: none;
+}
+
 .menu__list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     max-width: 600px;
+}
+
+.menu__link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
