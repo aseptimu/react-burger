@@ -10,9 +10,9 @@ class BurgerElement extends React.Component {
         return (
             <li className={`${styles.card}`}>
                 {count !== 0 && <Counter count={count} size="default" extraClass="m-1"/>}
-                <img src={image} alt={name}/>
+                <img className={`${styles.burger_element__image}`} src={image} alt={name} width={240} height={120}/>
                 <div className={styles.price}>
-                    <p className={"text text_type_digits-default"}>{price}</p>
+                    <p className={"text text_type_digits-default mt-1 mb-1"}>{price}</p>
                     <CurrencyIcon type="primary" />
                 </div>
                 <p className={"text text_type_main-default"}>{name}</p>

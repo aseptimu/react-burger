@@ -1,0 +1,26 @@
+.constructor__section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.constructor__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.constructor__list_item_middle {
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 8px;
+}
+
+.total {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}

@@ -16,12 +16,17 @@ a {
 .cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+    column-gap: 24px;
     min-height: 208px;
+    text-align: center;
 }
 
 .ingredients__section {
     height: 756px;
     overflow: auto;
+    scrollbar-width: thin;
+
 }
 
 .ingredients__wrapper {

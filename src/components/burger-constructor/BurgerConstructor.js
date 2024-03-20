@@ -1,5 +1,7 @@
 import React from 'react'
-import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+
+import styles from './burger-constructor.module.css'
 
 class BurgerConstructor extends React.Component {
     render() {
@@ -18,8 +20,8 @@ class BurgerConstructor extends React.Component {
             "__v":0
         }
         return (
-            <section style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <ul className={`mt-25`}>
+            <section className={`mt-25 ${styles.constructor__section}`}>
+                <ul className={`${styles.constructor__list}`}>
                     <li className={`pl-8`}>
                         <ConstructorElement
                             type="top"
@@ -29,7 +31,7 @@ class BurgerConstructor extends React.Component {
                             thumbnail={data.image_mobile}
                         />
                     </li>
-                    <li>
+                    <li className={`${styles.constructor__list_item_middle}`}>
                         <DragIcon type="primary" />
                         <ConstructorElement
                             text="Краторная булка N-200i (верх)"
@@ -37,7 +39,39 @@ class BurgerConstructor extends React.Component {
                             thumbnail={data.image_mobile}
                         />
                     </li>
-                    <li className={`pl-8 pt-4 pb-4`}>
+                    <li className={`${styles.constructor__list_item_middle}`}>
+                        <DragIcon type="primary"/>
+                        <ConstructorElement
+                            text="Краторная булка N-200i (верх)"
+                            price={50}
+                            thumbnail={data.image_mobile}
+                        />
+                    </li>
+                    <li className={`${styles.constructor__list_item_middle}`}>
+                        <DragIcon type="primary"/>
+                        <ConstructorElement
+                            text="Краторная булка N-200i (верх)"
+                            price={50}
+                            thumbnail={data.image_mobile}
+                        />
+                    </li>
+                    <li className={`${styles.constructor__list_item_middle}`}>
+                        <DragIcon type="primary"/>
+                        <ConstructorElement
+                            text="Краторная булка N-200i (верх)"
+                            price={50}
+                            thumbnail={data.image_mobile}
+                        />
+                    </li>
+                    <li className={`${styles.constructor__list_item_middle}`}>
+                        <DragIcon type="primary"/>
+                        <ConstructorElement
+                            text="Краторная булка N-200i (верх)"
+                            price={50}
+                            thumbnail={data.image_mobile}
+                        />
+                    </li>
+                    <li className={`pl-8`}>
                         <ConstructorElement
                             type="bottom"
                             isLocked={true}
@@ -47,6 +81,16 @@ class BurgerConstructor extends React.Component {
                         />
                     </li>
                 </ul>
+                <div className={`mt-10 ${styles.total}`}>
+                    <div style={{display: "flex", alignItems: "center"}}>
+                        <p className={`text text_type_digits-medium`}>610</p>
+                        <CurrencyIcon type="primary"  />
+                    </div>
+                    <Button htmlType="button" type="primary" size="medium" >
+                        Оформить заказ
+                    </Button>
+
+                </div>
             </section>
         )
     }

@@ -1,10 +1,11 @@
 .card {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
     max-width: 272px;
     list-style: none;
     position: relative;
-    column-gap: 24px;
-    row-gap: 32px;
 }
 
 .image {
@@ -15,4 +16,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.burger_element__image {
+    display: block;
+    width: 240px;
+    height: 120px;
 }
