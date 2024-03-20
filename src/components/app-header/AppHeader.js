@@ -24,7 +24,7 @@ class AppHeader extends React.Component {
                     </ul>
                 </nav>
                 <Logo/>
-                <a href="#" className={`${style.header__link} pt-4 pb-4 pl-5 pr-5`}>
+                <a href="#" className={`${style.header__link} ${style.login__link} pt-4 pb-4 pl-5 pr-5`}>
                     <ProfileIcon type="secondary"/>
                     <p className='text text_type_main-default text_color_inactive ml-2'>Личный кабинет</p>
                 </a>

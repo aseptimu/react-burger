@@ -1,4 +1,10 @@
-body {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
     margin: 0;
 }
 
@@ -8,5 +14,7 @@ ul {
 }
 
 .main {
-    max-width: 600px;
+    /*max-width: 600px;*/
+    display: flex;
+    justify-content: center;
 }

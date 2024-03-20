@@ -5,15 +5,15 @@ import BurgetrConstructor from './components/burger-constructor/BurgerConstructo
 import data from './utils/data'
 
 function App() {
-  return (
-    <>
-      <AppHeader ></AppHeader>
-      <main className='main'>
-        <BurgerIngredients ingredients={data}/>
-        {/* <BurgetrConstructor/> */}
-      </main>
-    </>
-  );
+    return (
+        <>
+            <AppHeader></AppHeader>
+            <main className='main'>
+                <BurgerIngredients ingredients={data}/>
+                <BurgetrConstructor/>
+            </main>
+        </>
+    );
 }
 
 export default App;

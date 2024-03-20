@@ -8,11 +8,11 @@ class BurgerElement extends React.Component {
         const {name, image, price, count} = this.props;
 
         return (
-            <li className={styles.card}>
+            <li className={`${styles.card}`}>
                 {count !== 0 && <Counter count={count} size="default" extraClass="m-1"/>}
                 <img src={image} alt={name}/>
                 <div className={styles.price}>
-                    <p className={"text text_type_digits-medium"}>{price}</p>
+                    <p className={"text text_type_digits-default"}>{price}</p>
                     <CurrencyIcon type="primary" />
                 </div>
                 <p className={"text text_type_main-default"}>{name}</p>

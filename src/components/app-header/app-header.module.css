@@ -7,14 +7,17 @@
     display: grid;
     grid-template-columns: 1fr min-content 1fr;
     align-items: center;
-    justify-items: center;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    /* max-width: 1280px; */
+    /*justify-items: center;*/
+    padding: 16px 320px;
+    max-width: 1920px;
+    background-color: #1C1C21;
 }
 
 .header__link {
-    
     display: flex;
     align-items: center;
+}
+
+.login__link {
+    justify-self: end;
 }

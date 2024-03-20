@@ -16,4 +16,14 @@ a {
 .cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    min-height: 208px;
+}
+
+.ingredients__section {
+    height: 756px;
+    overflow: auto;
+}
+
+.ingredients__wrapper {
+    display: flex;
 }

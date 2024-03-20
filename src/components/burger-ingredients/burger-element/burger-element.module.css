@@ -3,6 +3,8 @@
     max-width: 272px;
     list-style: none;
     position: relative;
+    column-gap: 24px;
+    row-gap: 32px;
 }
 
 .image {
