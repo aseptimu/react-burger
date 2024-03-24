@@ -1,16 +1,18 @@
-import React from 'react';
+import {useMemo, useState} from 'react';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from './burger-constructor.module.css';
 import OrderDetails from "./order-details/order-details";
-import PropTypes from "prop-types";
+import ingredientsPropTypes from "../../utils/prop-types";
+import Modal from "../modal/modal";
 
 function BurgerConstructor({ingredients}) {
-    const [activeModal, setActiveModal] = React.useState(false);
-    const bun = ingredients?.find(ingredient => ingredient.type === 'bun');
-    const fillings = ingredients?.filter(ingredient => ingredient.type !== 'bun');
+    const [activeModal, setActiveModal] = useState(false);
+    const bun = useMemo(() => (ingredients?.find(ingredient => ingredient.type === 'bun')), [ingredients]);
+    const fillings = useMemo(() => (ingredients?.filter(ingredient => ingredient.type !== 'bun')), [ingredients]);
 
-    const total = fillings?.reduce((acc, curr) => acc + curr.price, 0) + (bun ? bun.price * 2 : 0);
+    const total = useMemo(() => (fillings?.reduce((acc, curr) => acc + curr.price, 0) + (bun ? bun.price * 2 : 0))
+        , [fillings, bun]);
 
     function openModal() {
         setActiveModal(true);
@@ -19,26 +21,6 @@ function BurgerConstructor({ingredients}) {
     function closeModal() {
         setActiveModal(false);
     }
-
-    const ingredientPropTypes = PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        __v: PropTypes.number.isRequired
-    });
-    const ingredientsPropTypes = PropTypes.arrayOf(ingredientPropTypes).isRequired;
-
-    BurgerConstructor.propTypes = {
-        ingredients: ingredientsPropTypes
-    };
 
     return (
         <section className={`mt-25 ${styles.constructor__section}`}>
@@ -69,7 +51,7 @@ function BurgerConstructor({ingredients}) {
                         </li>
                     ))
                 ) : (
-                    <p className="pl-8 pr-2 text text_type_main-default">Выберите начинки</p>
+                    <li className="pl-8 pr-2 text text_type_main-default">Выберите начинки</li>
                 )}
             </ul>
             {bun ? (
@@ -86,7 +68,7 @@ function BurgerConstructor({ingredients}) {
                 <p className="pl-8 pt-4 pr-4 text text_type_main-default">Выберите булки</p>
             )}
             <div className={`mt-10 ${styles.total}`}>
-                <div style={{display: "flex", alignItems: "center"}}>
+                <div className={styles.amount}>
                     <p className={`text text_type_digits-medium`}>{total || 0}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
@@ -94,9 +76,17 @@ function BurgerConstructor({ingredients}) {
                     Оформить заказ
                 </Button>
             </div>
-            {activeModal && <OrderDetails onClose={closeModal}></OrderDetails>}
+            {activeModal &&
+                <Modal onClose={closeModal}>
+                    <OrderDetails onClose={closeModal}></OrderDetails>
+                </Modal>
+            }
         </section>
     );
 }
+
+BurgerConstructor.propTypes = {
+    ingredients: ingredientsPropTypes
+};
 
 export default BurgerConstructor;

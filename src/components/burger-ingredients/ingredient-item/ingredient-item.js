@@ -1,12 +1,11 @@
-import React from 'react';
+import {useState} from 'react';
 import styles from './ingredient-item.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import PropTypes from "prop-types";
 
-function IngredientItem(props) {
-    const [activeModal, setActiveModal] = React.useState(false);
-    const {name, image, price, count} = props;
+function IngredientItem({name, image, price, count, ...props}) {
+    const [activeModal, setActiveModal] = useState(false);
 
     function openModal() {
         setActiveModal(true);
@@ -15,21 +14,6 @@ function IngredientItem(props) {
     function closeModal() {
         setActiveModal(false);
     }
-    IngredientItem.propTypes = {
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string,
-        image_large: PropTypes.string,
-        __v: PropTypes.number.isRequired,
-        count: PropTypes.number
-    };
 
     return (
         <>
@@ -42,9 +26,24 @@ function IngredientItem(props) {
                 </div>
                 <p className={"text text_type_main-default"}>{name}</p>
             </div>
-            {activeModal && <IngredientDetails {...props} onClose={closeModal}/>}
+            {activeModal && <IngredientDetails {...props} image={image} name={name} onClose={closeModal}/>}
         </>
     )
 }
 
+IngredientItem.propTypes = {
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string,
+    image_large: PropTypes.string,
+    __v: PropTypes.number.isRequired,
+    count: PropTypes.number
+};
 export default IngredientItem;

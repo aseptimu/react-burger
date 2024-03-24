@@ -3,15 +3,6 @@ import styles from "./ingredient-details.module.css"
 import PropTypes from "prop-types";
 
 function IngredientDetails({image, name, calories, proteins, fat, carbohydrates, onClose}) {
-    IngredientDetails.propTypes = {
-        image: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        calories: PropTypes.number.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        onClose: PropTypes.func.isRequired
-    };
     return (
         <>
             <Modal text={"Детали ингредиента"} onClose={onClose}>
@@ -42,4 +33,13 @@ function IngredientDetails({image, name, calories, proteins, fat, carbohydrates,
     );
 }
 
+IngredientDetails.propTypes = {
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    calories: PropTypes.number.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    onClose: PropTypes.func.isRequired
+};
 export default IngredientDetails;

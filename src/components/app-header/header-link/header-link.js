@@ -4,10 +4,6 @@ import PropTypes from "prop-types";
 
 
 function HeaderLink({text, children}) {
-    HeaderLink.propTypes = {
-        text: PropTypes.string.isRequired,
-        children: PropTypes.node
-    };
     return (
         <a href="#" className={style.header__link}>
             {children}
@@ -16,4 +12,8 @@ function HeaderLink({text, children}) {
     )
 }
 
+HeaderLink.propTypes = {
+    text: PropTypes.string.isRequired,
+    children: PropTypes.node
+};
 export default HeaderLink;

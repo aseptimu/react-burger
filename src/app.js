@@ -2,16 +2,21 @@ import AppHeader from './components/app-header/app-header';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients.js'
 import BurgerConstructor from './components/burger-constructor/burger-constructor.js'
 
-import React from "react";
+import {useState, useEffect} from "react";
 
 function App() {
     const BASE_URL = 'https://norma.nomoreparties.space/api';
-    const [ingredients, setIngredients] = React.useState([]);
-    React.useEffect(() => {
+    const [ingredients, setIngredients] = useState([]);
+    useEffect(() => {
         fetch(`${BASE_URL}/ingredients`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Ошибка ${res.status}: ${res.statusText}`);
+                }
+                return res.json();
+            })
             .then((ingredients) => setIngredients(ingredients.data))
-            .catch(error => {throw new Error(error)});
+            .catch(error => {console.error(error)});
     }, [])
 
     return (

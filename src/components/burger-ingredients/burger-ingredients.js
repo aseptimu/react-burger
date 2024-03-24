@@ -1,35 +1,15 @@
-import React from 'react';
+import {useState} from 'react';
 import styles from './burger-ingredient.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsGroup from "./ingredients-group/ingredients-group"
-import PropTypes from 'prop-types';
+import ingredientsPropTypes from "../../utils/prop-types"
 
 function BurgerIngredients({ingredients}) {
-    const [currentTab, setCurrentTab] = React.useState('Булки');
+    const [currentTab, setCurrentTab] = useState('Булки');
 
     const handleClick = (value) => {
         setCurrentTab(value);
     }
-
-    const ingredientPropTypes = PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        __v: PropTypes.number.isRequired
-    });
-    const ingredientsPropTypes = PropTypes.arrayOf(ingredientPropTypes).isRequired;
-
-    BurgerIngredients.propTypes = {
-        ingredients: ingredientsPropTypes
-    };
 
     return (
         <section className={"mr-10"}>
@@ -53,5 +33,9 @@ function BurgerIngredients({ingredients}) {
         </section>
     )
 }
+
+BurgerIngredients.propTypes = {
+    ingredients: ingredientsPropTypes
+};
 
 export default BurgerIngredients;

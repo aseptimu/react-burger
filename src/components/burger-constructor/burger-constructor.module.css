@@ -30,6 +30,11 @@
     gap: 40px;
 }
 
+.amount {
+    display: flex;
+    align-items: center;
+}
+
 .element {
     background-color: #1C1C21;
 }

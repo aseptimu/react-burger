@@ -13,25 +13,6 @@ function IngredientsGroup({allIngredients, type, name}) {
         )
     });
 
-    IngredientsGroup.propTypes = {
-        allIngredients: PropTypes.arrayOf(PropTypes.shape({
-            _id: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-            type: PropTypes.string.isRequired,
-            proteins: PropTypes.number.isRequired,
-            fat: PropTypes.number.isRequired,
-            carbohydrates: PropTypes.number.isRequired,
-            calories: PropTypes.number.isRequired,
-            price: PropTypes.number.isRequired,
-            image: PropTypes.string.isRequired,
-            image_mobile: PropTypes.string.isRequired,
-            image_large: PropTypes.string.isRequired,
-            __v: PropTypes.number.isRequired
-        })).isRequired,
-        type: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired
-    };
-
     return (
         <>
             <h2 id={type} className='mt-10'>{name}</h2>
@@ -41,5 +22,24 @@ function IngredientsGroup({allIngredients, type, name}) {
         </>
     )
 }
+
+IngredientsGroup.propTypes = {
+    allIngredients: PropTypes.arrayOf(PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        proteins: PropTypes.number.isRequired,
+        fat: PropTypes.number.isRequired,
+        carbohydrates: PropTypes.number.isRequired,
+        calories: PropTypes.number.isRequired,
+        price: PropTypes.number.isRequired,
+        image: PropTypes.string.isRequired,
+        image_mobile: PropTypes.string.isRequired,
+        image_large: PropTypes.string.isRequired,
+        __v: PropTypes.number.isRequired
+    })).isRequired,
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+};
 
 export default IngredientsGroup;
