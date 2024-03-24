@@ -12,10 +12,6 @@
     composes: pb-8 text text_type_main-medium from global;
 }
 
-.main__nutrients {
-
-}
-
 .main__list {
 
     display: grid;

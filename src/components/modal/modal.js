@@ -3,6 +3,7 @@ import styles from './modal.module.css';
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
+import ModalOverlay from "./modal-overlay/modal-overlay";
 
 const modalRoot = document.getElementById("react-modals");
 function Modal({text, onClose, children}) {
@@ -24,13 +25,16 @@ function Modal({text, onClose, children}) {
     };
 
     return ReactDOM.createPortal((
-        <div className={styles.modal}>
-            <header className={styles.header}>
-                <h2 className={styles.header__title}>{text}</h2>
-                <CloseIcon type="primary" onClick={onClose}/>
-            </header>
-            {children}
-        </div>
+        <>
+            <ModalOverlay onClick={onClose}/>
+            <div className={styles.modal}>
+                <header className={styles.header}>
+                    <h2 className={styles.header__title}>{text}</h2>
+                    <CloseIcon type="primary" onClick={onClose}/>
+                </header>
+                {children}
+            </div>
+        </>
     ), modalRoot);
 }
 

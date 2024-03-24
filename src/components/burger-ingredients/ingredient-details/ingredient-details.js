@@ -1,4 +1,3 @@
-import ModalOverlay from "../../modal/modal-overlay/modal-overlay";
 import Modal from "../../modal/modal";
 import styles from "./ingredient-details.module.css"
 import PropTypes from "prop-types";
@@ -15,7 +14,6 @@ function IngredientDetails({image, name, calories, proteins, fat, carbohydrates,
     };
     return (
         <>
-            <ModalOverlay onClick={onClose}></ModalOverlay>
             <Modal text={"Детали ингредиента"} onClose={onClose}>
                 <main className={styles.main}>
                     <img className={styles.main__image} src={image} alt={name} width={480} height={240} />

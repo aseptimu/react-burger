@@ -1,4 +1,3 @@
-import ModalOverlay from "../../modal/modal-overlay/modal-overlay";
 import Modal from "../../modal/modal";
 
 import styles from "./order-details.module.css"
@@ -12,7 +11,6 @@ function OrderDetails({onClose}) {
     };
     return (
         <>
-            <ModalOverlay onClick={onClose}></ModalOverlay>
             <Modal onClose={onClose}>
                 <div className={styles.modal}>
                     <h2 className={styles.order_id_title}>034536</h2>
