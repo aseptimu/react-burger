@@ -1,29 +1,10 @@
-a {
-    text-decoration: none;
-}
-
-.menu__list {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    max-width: 600px;
-}
-
-.menu__link {
-    color: inherit;
-    text-decoration: none;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    row-gap: 32px;
-    column-gap: 24px;
-    min-height: 208px;
-    text-align: center;
+.main__header {
+    composes: text text_type_main-large mt-10 mb-5 from global;
 }
 
 .ingredients__section {
-    height: 756px;
+    composes: text text_type_main-default from global;
+    max-height: 756px;
     overflow: auto;
     scrollbar-width: thin;
 

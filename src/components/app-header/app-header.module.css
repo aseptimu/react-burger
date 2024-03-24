@@ -1,23 +1,15 @@
 .navigation__list {
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .header {
     display: grid;
     grid-template-columns: 1fr min-content 1fr;
     align-items: center;
-    /*justify-items: center;*/
-    padding: 16px 320px;
-    max-width: 1920px;
+    justify-items: center;
+    padding: 16px 0;
+    width: 100%;
     background-color: #1C1C21;
-}
-
-.header__link {
-    display: flex;
-    align-items: center;
-}
-
-.login__link {
-    justify-self: end;
 }
