@@ -1,0 +1,37 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main__image {
+    composes: pb-4 from global;
+}
+
+.main__header {
+    composes: pb-8 text text_type_main-medium from global;
+}
+
+.main__list {
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.list__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.nutrients {
+    composes: text text_type_main-default text_color_inactive from global;
+    text-align: center;
+}
+
+.nutrients_amount {
+    composes: text text_type_digits-default text_color_inactive from global;
+    text-align: center;
+}

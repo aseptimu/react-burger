@@ -1,0 +1,19 @@
+.cards_list {
+    composes: pt-6 pl-4 pr-4 from global;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+    column-gap: 24px;
+    min-height: 208px;
+    text-align: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 272px;
+    list-style: none;
+    position: relative;
+}

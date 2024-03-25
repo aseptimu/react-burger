@@ -1,0 +1,15 @@
+.image {
+    max-width: 240px;
+}
+
+.price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.burger_element__image {
+    display: block;
+    width: 240px;
+    height: 120px;
+}

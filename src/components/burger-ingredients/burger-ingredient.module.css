@@ -1,0 +1,15 @@
+.main__header {
+    composes: text text_type_main-large mt-10 mb-5 from global;
+}
+
+.ingredients__section {
+    composes: text text_type_main-default from global;
+    max-height: 756px;
+    overflow: auto;
+    scrollbar-width: thin;
+
+}
+
+.ingredients__wrapper {
+    display: flex;
+}

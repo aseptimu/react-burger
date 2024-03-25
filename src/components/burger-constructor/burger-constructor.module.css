@@ -1,0 +1,40 @@
+.constructor__section {
+    composes: mt-25 from global;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    max-height: 756px;
+}
+
+.constructor__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    max-height: 100%;
+    overflow: auto;
+    scrollbar-width: thin;
+}
+
+.constructor__list_item_middle {
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 8px;
+    min-width: 100%;
+}
+
+.total {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.amount {
+    display: flex;
+    align-items: center;
+}
+
+.element {
+    background-color: #1C1C21;
+}
