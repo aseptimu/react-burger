@@ -1,10 +1,11 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import styles from './burger-ingredient.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsGroup from "./ingredients-group/ingredients-group"
-import ingredientsPropTypes from "../../utils/prop-types"
+import {IngredientsContext} from "../../services/ingredients-context";
 
-function BurgerIngredients({ingredients}) {
+function BurgerIngredients() {
+    const ingredients = useContext(IngredientsContext);
     const [currentTab, setCurrentTab] = useState('Булки');
 
     const handleClick = (value) => {
@@ -12,7 +13,7 @@ function BurgerIngredients({ingredients}) {
     }
 
     return (
-        <section className={"mr-10"}>
+        <section>
             <h1 className={styles.main__header}>Соберите бургер</h1>
             <div className={styles.ingredients__wrapper}>
                 <Tab value="Булки" active={currentTab === 'Булки'} onClick={() => handleClick("Булки")}>
@@ -33,9 +34,5 @@ function BurgerIngredients({ingredients}) {
         </section>
     )
 }
-
-BurgerIngredients.propTypes = {
-    ingredients: ingredientsPropTypes
-};
 
 export default BurgerIngredients;

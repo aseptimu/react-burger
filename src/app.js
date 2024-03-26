@@ -2,11 +2,20 @@ import AppHeader from './components/app-header/app-header';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients.js'
 import BurgerConstructor from './components/burger-constructor/burger-constructor.js'
 
-import {useState, useEffect} from "react";
+import {useEffect, useReducer} from "react";
+import {IngredientsContext} from "./services/ingredients-context";
 
+function ingredientsReducer(state, action) {
+    switch(action.type) {
+        case 'set':
+            return action.value;
+        default:
+            return state;
+    }
+}
 function App() {
     const BASE_URL = 'https://norma.nomoreparties.space/api';
-    const [ingredients, setIngredients] = useState([]);
+    const [ingredients, setIngredients] = useReducer(ingredientsReducer, []);
     useEffect(() => {
         fetch(`${BASE_URL}/ingredients`)
             .then(res => {
@@ -15,7 +24,7 @@ function App() {
                 }
                 return res.json();
             })
-            .then((ingredients) => setIngredients(ingredients.data))
+            .then((ingredients) => setIngredients({type: 'set', value: ingredients.data}))
             .catch(error => {console.error(error)});
     }, [])
 
@@ -23,8 +32,10 @@ function App() {
         <>
             <AppHeader></AppHeader>
             <main className='main'>
-                <BurgerIngredients ingredients={ingredients}/>
-                <BurgerConstructor ingredients={ingredients}/>
+                <IngredientsContext.Provider value={ingredients}>
+                    <BurgerIngredients />
+                    <BurgerConstructor />
+                </IngredientsContext.Provider>
             </main>
         </>
     );
