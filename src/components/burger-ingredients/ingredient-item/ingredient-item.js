@@ -1,13 +1,16 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import styles from './ingredient-item.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import PropTypes from "prop-types";
+import {IngredientDetailsContext} from "../../../services/ingredient-details-context";
 
-function IngredientItem({name, image, price, count, ...props}) {
+function IngredientItem(props) {
+    const [, dispatchCurrentIngredient] = useContext(IngredientDetailsContext);
     const [activeModal, setActiveModal] = useState(false);
 
     function openModal() {
+        dispatchCurrentIngredient({type: 'set', value: {...props, onClose: closeModal}})
         setActiveModal(true);
     }
 
@@ -18,15 +21,15 @@ function IngredientItem({name, image, price, count, ...props}) {
     return (
         <>
             <div onClick={openModal}>
-                {count && <Counter count={count} size="default" extraClass="m-1"/>}
-                <img className={styles.burger_element__image} src={image} alt={name} width={240} height={120}/>
+                {props.count && <Counter count={props.count} size="default" extraClass="m-1"/>}
+                <img className={styles.burger_element__image} src={props.image} alt={props.name} width={240} height={120}/>
                 <div className={styles.price}>
-                    <p className={"text text_type_digits-default mt-1 mb-1"}>{price}</p>
+                    <p className={"text text_type_digits-default mt-1 mb-1"}>{props.price}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <p className={"text text_type_main-default"}>{name}</p>
+                <p className={"text text_type_main-default"}>{props.name}</p>
             </div>
-            {activeModal && <IngredientDetails {...props} image={image} name={name} onClose={closeModal}/>}
+            {activeModal && <IngredientDetails />}
         </>
     )
 }
