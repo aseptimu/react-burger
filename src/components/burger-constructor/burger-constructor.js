@@ -5,8 +5,8 @@ import styles from './burger-constructor.module.css';
 import OrderDetails from "./order-details/order-details";
 import Modal from "../modal/modal";
 import {IngredientsContext} from "../../services/ingredients-context";
-
-const POST_URL = 'https://norma.nomoreparties.space/api/orders';
+import {BASE_URL} from "../../utils/constants";
+import {request} from "../../utils/network-operations";
 
 const constructorInitialState = {
     bun: null,
@@ -22,7 +22,7 @@ function constructorReducer(state, action) {
             return {...state, ingredients: [...state.ingredients].push(action.value)}
         case 'removeIngredient':
             return {...state, ingredients: [...state.ingredients].filter((element) => element._id !== action.value._id)}
-        /**TODO: выпилить когда данные будут передаваться из #BurgerIngredients*/
+        /*TODO: выпилить когда данные будут передаваться из #BurgerIngredients*/
         case 'setIngredients':
             return {...state, ingredients: action.value}
         case 'setTotal':
@@ -67,7 +67,7 @@ function BurgerConstructor() {
 
     function orderCheckout() {
         dispatchOrderData({type: 'setData', value: null});
-        fetch(POST_URL, {
+        request(`${BASE_URL}/orders`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -75,14 +75,7 @@ function BurgerConstructor() {
             body: JSON.stringify({
                 ingredients: ingredients?.map((element) => element._id)
             })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Failed to send request");
-                }
-                return response.json();
-            })
-            .then(data => {
+        }).then(data => {
                 dispatchOrderData({type: 'setData', value: data.order?.number});
             })
             .catch(error => console.error(error));

@@ -4,6 +4,8 @@ import BurgerConstructor from './components/burger-constructor/burger-constructo
 
 import {useEffect, useReducer} from "react";
 import {IngredientsContext} from "./services/ingredients-context";
+import {BASE_URL} from "./utils/constants";
+import {request} from "./utils/network-operations";
 
 function ingredientsReducer(state, action) {
     switch(action.type) {
@@ -14,16 +16,9 @@ function ingredientsReducer(state, action) {
     }
 }
 function App() {
-    const BASE_URL = 'https://norma.nomoreparties.space/api';
     const [ingredients, setIngredients] = useReducer(ingredientsReducer, []);
     useEffect(() => {
-        fetch(`${BASE_URL}/ingredients`)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`Ошибка ${res.status}: ${res.statusText}`);
-                }
-                return res.json();
-            })
+        request(`${BASE_URL}/ingredients`)
             .then((ingredients) => setIngredients({type: 'set', value: ingredients.data}))
             .catch(error => {console.error(error)});
     }, [])
