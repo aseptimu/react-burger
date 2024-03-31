@@ -1,9 +1,9 @@
-import {useContext, useReducer, useState} from 'react';
+import {useReducer, useState} from 'react';
 import styles from './burger-ingredient.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsGroup from "./ingredients-group/ingredients-group"
-import {IngredientsContext} from "../../services/ingredients-context";
 import {IngredientDetailsContext} from "../../services/ingredient-details-context";
+import {useSelector} from "react-redux";
 
 function burgerIngredientReducer(state, action) {
     switch(action.type) {
@@ -17,7 +17,7 @@ function burgerIngredientReducer(state, action) {
 }
 
 function BurgerIngredients() {
-    const ingredients = useContext(IngredientsContext);
+    const {ingredients} = useSelector(store => store.ingredients);
     const [currentTab, setCurrentTab] = useState('Булки');
     const currentIngredient = useReducer(burgerIngredientReducer, {})
 

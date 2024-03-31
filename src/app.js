@@ -6,6 +6,8 @@ import {useEffect, useReducer} from "react";
 import {IngredientsContext} from "./services/ingredients-context";
 import {BASE_URL} from "./utils/constants";
 import {request} from "./utils/network-operations";
+import {fetchIngredients} from "./services/ingredients-slice";
+import {useDispatch} from "react-redux";
 
 function ingredientsReducer(state, action) {
     switch(action.type) {
@@ -16,21 +18,17 @@ function ingredientsReducer(state, action) {
     }
 }
 function App() {
-    const [ingredients, setIngredients] = useReducer(ingredientsReducer, []);
+    const dispatch = useDispatch();
     useEffect(() => {
-        request(`${BASE_URL}/ingredients`)
-            .then((ingredients) => setIngredients({type: 'set', value: ingredients.data}))
-            .catch(error => {console.error(error)});
+        dispatch(fetchIngredients());
     }, [])
 
     return (
         <>
             <AppHeader></AppHeader>
             <main className='main'>
-                <IngredientsContext.Provider value={ingredients}>
                     <BurgerIngredients />
                     <BurgerConstructor />
-                </IngredientsContext.Provider>
             </main>
         </>
     );

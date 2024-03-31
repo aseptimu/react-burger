@@ -7,6 +7,7 @@
 }
 
 .constructor__list {
+    composes: pl-4 pr-2 from global;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,23 +17,20 @@
     scrollbar-width: thin;
 }
 
-.constructor__list_item_middle {
-    display: flex;
-    align-items: center;
-    position: relative;
-    gap: 8px;
-    min-width: 100%;
-}
-
 .total {
+    composes: mt-10 from global;
     display: flex;
     align-items: center;
     gap: 40px;
 }
 
-.amount {
+.price {
     display: flex;
     align-items: center;
+}
+
+.amount {
+    composes: text text_type_digits-medium from global;
 }
 
 .element {
