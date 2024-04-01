@@ -21,9 +21,7 @@ const ingredientsSlice = createSlice({
     initialState: {
         ingredients: []
     },
-    reducers: {
-
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchIngredients.fulfilled, (state, action) => {
             state.ingredients = action.payload;

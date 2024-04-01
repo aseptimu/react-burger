@@ -1,8 +1,11 @@
 import styles from "./order-details.module.css"
 import logo from "../../../images/done.svg"
+import {useSelector} from "react-redux";
 
 
-function OrderDetails({number}) {
+function OrderDetails() {
+    const number = useSelector(store => store.orderDetails.number)
+
     return (
         <>
             <div className={styles.modal}>

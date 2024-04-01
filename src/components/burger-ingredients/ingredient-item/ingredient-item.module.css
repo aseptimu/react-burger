@@ -2,14 +2,22 @@
     max-width: 240px;
 }
 
-.price {
+.total {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.price {
+    composes: text text_type_digits-default mt-1 mb-1 mr-2 from global;
 }
 
 .burger_element__image {
     display: block;
     width: 240px;
     height: 120px;
+}
+
+.description {
+    composes: text text_type_main-default from global;
 }

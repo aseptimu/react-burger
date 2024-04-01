@@ -1,28 +1,25 @@
-import {useReducer, useState} from 'react';
+import {useRef, useState} from 'react';
 import styles from './burger-ingredient.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsGroup from "./ingredients-group/ingredients-group"
-import {IngredientDetailsContext} from "../../services/ingredient-details-context";
 import {useSelector} from "react-redux";
-
-function burgerIngredientReducer(state, action) {
-    switch(action.type) {
-        case 'set':
-            return {...action.value};
-        case 'clear':
-            return {};
-        default:
-            throw new Error("Incorrect operation type for burger ingredient")
-    }
-}
 
 function BurgerIngredients() {
     const {ingredients} = useSelector(store => store.ingredients);
     const [currentTab, setCurrentTab] = useState('Булки');
-    const currentIngredient = useReducer(burgerIngredientReducer, {})
 
     const handleClick = (value) => {
         setCurrentTab(value);
+    }
+    const ingredientRefs = {
+        bun: useRef(null),
+        sauce: useRef(null),
+        main: useRef(null)
+    }
+
+
+    const handleScroll = (e) => {
+
     }
 
     return (
@@ -39,12 +36,10 @@ function BurgerIngredients() {
                     Начинки
                 </Tab>
             </div>
-            <section className={styles.ingredients__section}>
-                <IngredientDetailsContext.Provider value={currentIngredient}>
-                    <IngredientsGroup allIngredients={ingredients} type={'bun'} name={"Булки"}/>
-                    <IngredientsGroup allIngredients={ingredients} type={'sauce'} name={"Соусы"}/>
-                    <IngredientsGroup allIngredients={ingredients} type={'main'} name={"Начинки"}/>
-                </IngredientDetailsContext.Provider>
+            <section className={styles.ingredients__section} onScroll={handleScroll}>
+                <IngredientsGroup allIngredients={ingredients} type={'bun'} name={"Булки"} ref={ingredientRefs.bun}/>
+                <IngredientsGroup allIngredients={ingredients} type={'sauce'} name={"Соусы"} ref={ingredientRefs.sauce}/>
+                <IngredientsGroup allIngredients={ingredients} type={'main'} name={"Начинки"} ref={ingredientRefs.main}/>
             </section>
         </section>
     )

@@ -1,15 +1,14 @@
 import Modal from "../../modal/modal";
 import styles from "./ingredient-details.module.css"
 import PropTypes from "prop-types";
-import {useContext} from "react";
-import {IngredientDetailsContext} from "../../../services/ingredient-details-context";
+import {useSelector} from "react-redux";
 
-function IngredientDetails() {
-    const [currentIngredient] = useContext(IngredientDetailsContext);
+function IngredientDetails({onClose}) {
 
+    const currentIngredient = useSelector(store => store.ingredientDetails)
     return (
         <>
-            <Modal text={"Детали ингредиента"} onClose={currentIngredient.onClose}>
+            <Modal text={"Детали ингредиента"} onClose={onClose}>
                 <main className={styles.main}>
                     <img className={styles.main__image} src={currentIngredient.image} alt={currentIngredient.name} width={480} height={240} />
                     <h2 className={styles.main__header}>{currentIngredient.name}</h2>

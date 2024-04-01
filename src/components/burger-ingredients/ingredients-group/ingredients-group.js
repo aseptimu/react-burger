@@ -1,10 +1,10 @@
 import styles from "./ingredients-group.module.css";
-import React from "react";
+import React, {forwardRef} from "react";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import PropTypes from "prop-types";
 
 
-function IngredientsGroup({allIngredients, type, name}) {
+const IngredientsGroup = forwardRef(({allIngredients, type, name}, ref) => {
     const ingredients = allIngredients?.filter(element => element.type === type).map(element => {
         return (
             <li key={element._id} className={styles.card}>
@@ -15,13 +15,13 @@ function IngredientsGroup({allIngredients, type, name}) {
 
     return (
         <>
-            <h2 id={type} className='mt-10'>{name}</h2>
+            <h2 id={type} className='mt-10' ref={ref}>{name}</h2>
             <ul className={styles.cards_list}>
                 {ingredients ? ingredients : (<p>Ингредиенты отсутствуют</p>)}
             </ul>
         </>
-    )
-}
+    );
+});
 
 IngredientsGroup.propTypes = {
     allIngredients: PropTypes.arrayOf(PropTypes.shape({
