@@ -11,6 +11,7 @@ import {CONSTRUCTOR_INGREDIENT, DRAG_ELEMENT} from "../../../../utils/constants"
 function ConstructorIngredient({element, index, handleMoveIngredient}) {
     const dispatch = useDispatch();
     const ingredients = useSelector(state => state.ingredients.ingredients);
+    const bun = useSelector(state => state.burgerConstructor.bun)
     const ref = useRef(null)
     const [{ handlerId }, drop] = useDrop({
         accept: [CONSTRUCTOR_INGREDIENT, DRAG_ELEMENT],
@@ -35,6 +36,8 @@ function ConstructorIngredient({element, index, handleMoveIngredient}) {
                 const ingredient = ingredients.find(element => element._id === item._id)
                 if (ingredient.type === 'bun') {
                     dispatch(setBun(ingredient))
+                    bun && dispatch(decrementIngredientCounter(bun._id));
+                    bun && dispatch(decrementIngredientCounter(bun._id));
                     dispatch(incrementIngredientCounter(item._id));
                 } else {
                     dispatch(setIngredient({ingredient, hoverIndex}));
@@ -85,7 +88,7 @@ function ConstructorIngredient({element, index, handleMoveIngredient}) {
     }
 
     return (
-        <div ref={ref} className={styles.constructor__list_item_middle}>
+        <div ref={ref} className={styles.constructor__element}>
             {element ? (
                 <>
                     <DragIcon type="primary"/>
