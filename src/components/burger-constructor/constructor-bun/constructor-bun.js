@@ -10,7 +10,7 @@ function ConstructorBun({bun, type}) {
                 <ConstructorElement
                     type={type}
                     isLocked={true}
-                    text={`${bun.name} (верх)`}
+                    text={`${bun.name} ${type === 'top' ? 'верх' : 'низ'}`}
                     price={bun.price}
                     thumbnail={bun.image_mobile}
                     extraClass={constructorStyles.element}/>

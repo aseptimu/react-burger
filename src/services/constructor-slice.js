@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, nanoid} from "@reduxjs/toolkit";
 
 const constructorSlice = createSlice({
     name: 'constructor',
@@ -11,27 +11,30 @@ const constructorSlice = createSlice({
         setBun: (state, action) => {
             state.bun = action.payload;
         },
-        setIngredient: (state, action) => {
-            state.ingredients.push(action.payload);
+        moveIngredient: (state, action) => {
+            const { dragIndex, hoverIndex } = action.payload;
+            const dragIngredient = state.ingredients[dragIndex];
+            state.ingredients.splice(dragIndex, 1);
+            state.ingredients.splice(hoverIndex, 0, dragIngredient);
         },
-        setIngredients: (state, action) => {
-            state.ingredients = action.payload;
+        setIngredient: (state, action) => {
+            const {ingredient, hoverIndex} = action.payload;
+            state.ingredients.splice(hoverIndex, 0, {...ingredient, nanoid: nanoid()});
         },
         removeIngredient: (state, action) => {
-            state.ingredients.filter((element) => element._id !== action.payload);
+            state.ingredients = state.ingredients.filter((element) => element.nanoid !== action.payload);
         },
         setTotal: (state, action) => {
             state.total = action.payload;
         },
     },
-
 })
 
 export const {
     setBun,
     setIngredient,
-    setIngredients,
     removeIngredient,
-    setTotal
+    setTotal,
+    moveIngredient
 } = constructorSlice.actions;
 export default constructorSlice.reducer;

@@ -3,5 +3,5 @@
 }
 
 .constructor__bun {
-    composes: pl-8 pb-4 pr-4 from global;
+    composes: pl-8 pb-4 pt-4 pr-4 from global;
 }

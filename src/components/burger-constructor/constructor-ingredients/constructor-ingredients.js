@@ -1,24 +1,25 @@
-import React from 'react';
-import constructorStyles from "../burger-constructor.module.css";
-import styles from "./constructor-ingredients.module.css"
-import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import React, {useCallback} from 'react';
+import ConstructorIngredient from "./constructor-ingredient/constructor-ingredient";
+import {moveIngredient} from "../../../services/constructor-slice";
+import {useDispatch} from "react-redux";
 
 function ConstructorIngredients({ingredients}) {
+    const dispatch = useDispatch()
+    const handleMoveIngredient = useCallback((dragIndex, hoverIndex) => {
+        dispatch(moveIngredient({dragIndex, hoverIndex}));
+    }, [])
     return (
         ingredients?.length ? (
-                ingredients.map((element) => (
-                    <li key={element._id} className={`${styles.constructor__list_item_middle}`}>
-                        <DragIcon type="primary"/>
-                        <ConstructorElement
-                            text={element.name}
-                            price={element.price}
-                            thumbnail={element.image_mobile}
-                            extraClass={constructorStyles.element}/>
-
+                ingredients.map((element, index) => (
+                    <li key={element.nanoid} draggable={true} style={{minWidth: "100%"}}>
+                        <ConstructorIngredient element={element} index={index} handleMoveIngredient={handleMoveIngredient}></ConstructorIngredient>
                     </li>
                 ))
             ) : (
-                <li className={`${styles.ingredients__list_item}`}>Выберите начинки</li>
+
+                <li>
+                    <ConstructorIngredient  />
+                </li>
             )
     );
 }

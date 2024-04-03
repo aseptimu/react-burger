@@ -5,9 +5,10 @@ import PropTypes from "prop-types";
 
 
 const IngredientsGroup = forwardRef(({allIngredients, type, name}, ref) => {
+
     const ingredients = allIngredients?.filter(element => element.type === type).map(element => {
         return (
-            <li key={element._id} className={styles.card}>
+            <li key={element._id} className={styles.card} draggable={true}>
                 <IngredientItem key={element._id} {...element}/>
             </li>
         )
@@ -15,7 +16,7 @@ const IngredientsGroup = forwardRef(({allIngredients, type, name}, ref) => {
 
     return (
         <>
-            <h2 id={type} className='mt-10' ref={ref}>{name}</h2>
+            <h2 className='mt-10' ref={ref}>{name}</h2>
             <ul className={styles.cards_list}>
                 {ingredients ? ingredients : (<p>Ингредиенты отсутствуют</p>)}
             </ul>

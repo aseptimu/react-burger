@@ -7,7 +7,7 @@ import Modal from "../modal/modal";
 import {useDispatch, useSelector} from "react-redux";
 import ConstructorBun from "./constructor-bun/constructor-bun";
 import ConstructorIngredients from "./constructor-ingredients/constructor-ingredients";
-import {setBun, setIngredients, setTotal} from "../../services/constructor-slice";
+import {setTotal} from "../../services/constructor-slice";
 import {checkoutRequest} from "../../services/order-details-slice";
 
 function BurgerConstructor() {
@@ -18,12 +18,7 @@ function BurgerConstructor() {
 
     const [activeModal, setActiveModal] = useState(false);
 
-    useEffect(() => {
-        dispatch(setBun(ingredients?.find(ingredient => ingredient.type === 'bun')));
-        dispatch(setIngredients(ingredients?.filter(ingredient => ingredient.type !== 'bun')))
-        },
-        [ingredients, dispatch]
-    )
+
 
     useEffect(() => {
         dispatch(setTotal(constructor.ingredients?.reduce((acc, curr) => acc + curr.price, 0) + (constructor.bun ? constructor.bun.price * 2 : 0)))

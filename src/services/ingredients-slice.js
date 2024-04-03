@@ -15,13 +15,21 @@ export const fetchIngredients = createAsyncThunk(
     }
 );
 
-
 const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState: {
         ingredients: []
     },
-    reducers: {},
+    reducers: {
+        incrementIngredientCounter: (state, action) => {
+            const ingredient = state.ingredients.find((element) => element._id === action.payload)
+            ++ingredient.__v;
+        },
+        decrementIngredientCounter: (state, action) => {
+            const ingredient = state.ingredients.find((element) => element._id === action.payload)
+            --ingredient.__v;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchIngredients.fulfilled, (state, action) => {
             state.ingredients = action.payload;
@@ -30,4 +38,5 @@ const ingredientsSlice = createSlice({
 })
 
 export default ingredientsSlice.reducer
+export const {incrementIngredientCounter, decrementIngredientCounter} = ingredientsSlice.actions
 

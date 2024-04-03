@@ -7,7 +7,7 @@ export const checkoutRequest = createAsyncThunk(
     'order/checkout',
     async (order, {rejectWithValue}) => {
         try {
-            const response = await request(`${BASE_URL}/ordersa`, {
+            const response = await request(`${BASE_URL}/orders`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
