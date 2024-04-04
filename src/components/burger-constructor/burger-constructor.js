@@ -8,6 +8,8 @@ import {useDispatch, useSelector} from "react-redux";
 import ConstructorBun from "./constructor-bun/constructor-bun";
 import ConstructorIngredients from "./constructor-ingredients/constructor-ingredients";
 import {checkoutRequest} from "../../services/order-details-slice";
+import {clearConstructor} from "../../services/constructor-slice";
+import {dropIngredientsCounter} from "../../services/ingredients-slice";
 
 function BurgerConstructor() {
     const ingredients = useSelector(state => state.ingredients.ingredients)
@@ -23,6 +25,12 @@ function BurgerConstructor() {
 
     function orderCheckout() {
         dispatch(checkoutRequest(ingredients?.map((element) => element._id)))
+            .then(response => {
+                if (response.payload.number) {
+                    dispatch(clearConstructor())
+                    dispatch(dropIngredientsCounter());
+                }
+            })
         setActiveModal(true);
     }
 
@@ -42,7 +50,7 @@ function BurgerConstructor() {
                     <p className={`${styles.amount}`}>{total || 0}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button htmlType="button" type="primary" size="medium" onClick={orderCheckout}>
+                <Button disabled={!constructor.bun} htmlType="button" type="primary" size="medium" onClick={orderCheckout}>
                     Оформить заказ
                 </Button>
             </div>

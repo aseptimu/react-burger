@@ -18,7 +18,6 @@ export const checkoutRequest = createAsyncThunk(
             })
             return response.order;
         } catch (error) {
-            console.error(error);
             return rejectWithValue(error);
         }
     }
@@ -37,9 +36,10 @@ const orderDetailsSlice = createSlice({
         builder.addCase(checkoutRequest.fulfilled, (state, action) => {
             state.number = action.payload?.number;
         })
-        builder.addCase(checkoutRequest.rejected, (state) => {
+        builder.addCase(checkoutRequest.rejected, (state, action) => {
             state.ingredients = state.initialState;
             state.number = 'Error';
+            console.error("Error fetching ingredients\n", action.payload)
         })
     }
 })
