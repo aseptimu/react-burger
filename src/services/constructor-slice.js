@@ -5,7 +5,6 @@ const constructorSlice = createSlice({
     initialState: {
         bun: null,
         ingredients: [],
-        total: 0
     },
     reducers: {
         setBun: (state, action) => {
@@ -23,10 +22,7 @@ const constructorSlice = createSlice({
         },
         removeIngredient: (state, action) => {
             state.ingredients = state.ingredients.filter((element) => element.nanoid !== action.payload);
-        },
-        setTotal: (state, action) => {
-            state.total = action.payload;
-        },
+        }
     },
 })
 
@@ -34,7 +30,6 @@ export const {
     setBun,
     setIngredient,
     removeIngredient,
-    setTotal,
     moveIngredient
 } = constructorSlice.actions;
 export default constructorSlice.reducer;

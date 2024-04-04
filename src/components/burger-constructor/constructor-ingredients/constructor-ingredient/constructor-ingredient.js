@@ -13,13 +13,8 @@ function ConstructorIngredient({element, index, handleMoveIngredient}) {
     const ingredients = useSelector(state => state.ingredients.ingredients);
     const bun = useSelector(state => state.burgerConstructor.bun)
     const ref = useRef(null)
-    const [{ handlerId }, drop] = useDrop({
+    const [, drop] = useDrop({
         accept: [CONSTRUCTOR_INGREDIENT, DRAG_ELEMENT],
-        collect(monitor) {
-            return {
-                handlerId: monitor.getHandlerId(),
-            }
-        },
         drop(item, monitor) {
             if (!ref.current) {
                 return;
@@ -88,7 +83,7 @@ function ConstructorIngredient({element, index, handleMoveIngredient}) {
     }
 
     return (
-        <div ref={ref} className={styles.constructor__element}>
+        <div ref={ref} className={`${styles.constructor__element} ${isDragging && styles.opacity}`}>
             {element ? (
                 <>
                     <DragIcon type="primary"/>
@@ -101,7 +96,7 @@ function ConstructorIngredient({element, index, handleMoveIngredient}) {
                     />
                 </>
             ) : (
-                <ConstructorElement text={"выберите элемент"}></ConstructorElement>
+                <ConstructorElement text={"выберите элемент"} price={null} thumbnail={null}></ConstructorElement>
             )}
         </div>
     );

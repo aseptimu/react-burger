@@ -38,6 +38,7 @@ const orderDetailsSlice = createSlice({
             state.number = action.payload?.number;
         })
         builder.addCase(checkoutRequest.rejected, (state) => {
+            state.ingredients = state.initialState;
             state.number = 'Error';
         })
     }

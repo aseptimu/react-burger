@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from './burger-constructor.module.css';
@@ -7,22 +7,19 @@ import Modal from "../modal/modal";
 import {useDispatch, useSelector} from "react-redux";
 import ConstructorBun from "./constructor-bun/constructor-bun";
 import ConstructorIngredients from "./constructor-ingredients/constructor-ingredients";
-import {setTotal} from "../../services/constructor-slice";
 import {checkoutRequest} from "../../services/order-details-slice";
 
 function BurgerConstructor() {
     const ingredients = useSelector(state => state.ingredients.ingredients)
     const constructor = useSelector(state => state.burgerConstructor);
-
     const dispatch =  useDispatch();
 
     const [activeModal, setActiveModal] = useState(false);
 
 
-
-    useEffect(() => {
-        dispatch(setTotal(constructor.ingredients?.reduce((acc, curr) => acc + curr.price, 0) + (constructor.bun ? constructor.bun.price * 2 : 0)))
-    }, [constructor.bun, constructor.ingredients, dispatch])
+    const total = useMemo(() => (
+        constructor.ingredients?.reduce((acc, curr) => acc + curr.price, 0) + (constructor.bun ? constructor.bun.price * 2 : 0)
+    ), [constructor.bun, constructor.ingredients])
 
     function orderCheckout() {
         dispatch(checkoutRequest(ingredients?.map((element) => element._id)))
@@ -42,7 +39,7 @@ function BurgerConstructor() {
             <ConstructorBun bun={constructor.bun} type={"bottom"}/>
             <div className={`${styles.total}`}>
                 <div className={styles.price}>
-                    <p className={`${styles.amount}`}>{constructor.total || 0}</p>
+                    <p className={`${styles.amount}`}>{total || 0}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
                 <Button htmlType="button" type="primary" size="medium" onClick={orderCheckout}>

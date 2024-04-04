@@ -31,8 +31,15 @@ const ingredientsSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
+        builder.addCase(fetchIngredients.pending, () => {
+            console.info("Pending...")
+        })
         builder.addCase(fetchIngredients.fulfilled, (state, action) => {
             state.ingredients = action.payload;
+        })
+        builder.addCase(fetchIngredients.rejected, (state) => {
+            state.ingredients = state.initialState;
+            console.error("Error fetching ingredients")
         })
     }
 })

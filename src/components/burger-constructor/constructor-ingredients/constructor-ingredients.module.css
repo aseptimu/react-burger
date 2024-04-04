@@ -13,3 +13,7 @@
 .constructor__list_item {
     min-width: 100%;
 }
+
+.opacity {
+    opacity: 0.5;
+}
