@@ -5,21 +5,17 @@ import {BASE_URL} from "../utils/constants";
 
 export const checkoutRequest = createAsyncThunk(
     'order/checkout',
-    async (order, {rejectWithValue}) => {
-        try {
-            const response = await request(`${BASE_URL}/orders`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify({
-                    ingredients: order
-                })
+    async (order) => {
+        const response = await request(`${BASE_URL}/orders`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                ingredients: order
             })
-            return response.order;
-        } catch (error) {
-            return rejectWithValue(error);
-        }
+        })
+        return response.order;
     }
 )
 
