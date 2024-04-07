@@ -1,0 +1,7 @@
+.constructor__bun_empty {
+    composes: pl-8 pt-4 pr-4 text text_type_main-default from global;
+}
+
+.constructor__bun {
+    composes: pl-8 pb-4 pt-4 pr-4 from global;
+}

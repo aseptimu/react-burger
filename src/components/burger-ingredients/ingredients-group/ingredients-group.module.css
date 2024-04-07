@@ -17,3 +17,7 @@
     list-style: none;
     position: relative;
 }
+
+.card:active {
+    cursor: grab;
+}

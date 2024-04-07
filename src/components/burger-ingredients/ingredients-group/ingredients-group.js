@@ -1,13 +1,15 @@
 import styles from "./ingredients-group.module.css";
-import React from "react";
+import React, {forwardRef} from "react";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import PropTypes from "prop-types";
+import ingredientsPropTypes from "../../../utils/prop-types";
 
 
-function IngredientsGroup({allIngredients, type, name}) {
+const IngredientsGroup = forwardRef(({allIngredients, type, name}, ref) => {
+
     const ingredients = allIngredients?.filter(element => element.type === type).map(element => {
         return (
-            <li key={element._id} className={styles.card}>
+            <li key={element._id} className={styles.card} draggable={true}>
                 <IngredientItem key={element._id} {...element}/>
             </li>
         )
@@ -15,29 +17,16 @@ function IngredientsGroup({allIngredients, type, name}) {
 
     return (
         <>
-            <h2 id={type} className='mt-10'>{name}</h2>
+            <h2 className='mt-10' ref={ref}>{name}</h2>
             <ul className={styles.cards_list}>
                 {ingredients ? ingredients : (<p>Ингредиенты отсутствуют</p>)}
             </ul>
         </>
-    )
-}
+    );
+});
 
 IngredientsGroup.propTypes = {
-    allIngredients: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        __v: PropTypes.number.isRequired
-    })).isRequired,
+    allIngredients: ingredientsPropTypes,
     type: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
 };

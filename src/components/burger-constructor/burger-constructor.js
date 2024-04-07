@@ -1,20 +1,36 @@
 import {useMemo, useState} from 'react';
-import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from './burger-constructor.module.css';
 import OrderDetails from "./order-details/order-details";
-import ingredientsPropTypes from "../../utils/prop-types";
 import Modal from "../modal/modal";
+import {useDispatch, useSelector} from "react-redux";
+import ConstructorBun from "./constructor-bun/constructor-bun";
+import ConstructorIngredients from "./constructor-ingredients/constructor-ingredients";
+import {checkoutRequest} from "../../services/order-details-slice";
+import {clearConstructor} from "../../services/constructor-slice";
+import {dropIngredientsCounter} from "../../services/ingredients-slice";
 
-function BurgerConstructor({ingredients}) {
+function BurgerConstructor() {
+    const ingredients = useSelector(state => state.ingredients.ingredients)
+    const constructor = useSelector(state => state.burgerConstructor);
+    const dispatch =  useDispatch();
+
     const [activeModal, setActiveModal] = useState(false);
-    const bun = useMemo(() => (ingredients?.find(ingredient => ingredient.type === 'bun')), [ingredients]);
-    const fillings = useMemo(() => (ingredients?.filter(ingredient => ingredient.type !== 'bun')), [ingredients]);
 
-    const total = useMemo(() => (fillings?.reduce((acc, curr) => acc + curr.price, 0) + (bun ? bun.price * 2 : 0))
-        , [fillings, bun]);
 
-    function openModal() {
+    const total = useMemo(() => (
+        constructor.ingredients?.reduce((acc, curr) => acc + curr.price, 0) + (constructor.bun ? constructor.bun.price * 2 : 0)
+    ), [constructor.bun, constructor.ingredients])
+
+    function orderCheckout() {
+        dispatch(checkoutRequest(ingredients?.map((element) => element._id)))
+            .then(response => {
+                if (response.payload.number) {
+                    dispatch(clearConstructor())
+                    dispatch(dropIngredientsCounter());
+                }
+            })
         setActiveModal(true);
     }
 
@@ -23,70 +39,28 @@ function BurgerConstructor({ingredients}) {
     }
 
     return (
-        <section className={`mt-25 ${styles.constructor__section}`}>
-            {bun ? (
-                <div className={`pl-8 pb-4 pr-4`}>
-                    <ConstructorElement
-                        type="top"
-                        isLocked={true}
-                        text={`${bun.name} (верх)`}
-                        price={bun.price}
-                        thumbnail={bun.image_mobile}
-                        extraClass={styles.element}/>
-                </div>
-            ) : (
-                <p className="pl-8 pt-4 pr-4 text text_type_main-default">Выберите булки</p>
-            )}
-            <ul className={`pl-8 pr-2 ${styles.constructor__list}`}>
-                {fillings?.length ? (
-                    fillings.map((element) => (
-                        <li key={element._id} className={`${styles.constructor__list_item_middle}`}>
-                            <DragIcon type="primary"/>
-                            <ConstructorElement
-                                text={element.name}
-                                price={element.price}
-                                thumbnail={element.image_mobile}
-                                extraClass={styles.element}/>
-
-                        </li>
-                    ))
-                ) : (
-                    <li className="pl-8 pr-2 text text_type_main-default">Выберите начинки</li>
-                )}
+        <section className={`${styles.constructor__section}`}>
+            <ConstructorBun bun={constructor.bun} type={"top"}/>
+            <ul className={`${styles.constructor__list}`}>
+                <ConstructorIngredients ingredients={constructor.ingredients}/>
             </ul>
-            {bun ? (
-                <div className={`pl-8 pt-4 pr-4`}>
-                    <ConstructorElement
-                        type="bottom"
-                        isLocked={true}
-                        text={`${bun.name} (низ)`}
-                        price={bun.price}
-                        thumbnail={bun.image_mobile}
-                        extraClass={styles.element}/>
-                </div>
-            ) : (
-                <p className="pl-8 pt-4 pr-4 text text_type_main-default">Выберите булки</p>
-            )}
-            <div className={`mt-10 ${styles.total}`}>
-                <div className={styles.amount}>
-                    <p className={`text text_type_digits-medium`}>{total || 0}</p>
+            <ConstructorBun bun={constructor.bun} type={"bottom"}/>
+            <div className={`${styles.total}`}>
+                <div className={styles.price}>
+                    <p className={`${styles.amount}`}>{total || 0}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
+                <Button disabled={!constructor.bun} htmlType="button" type="primary" size="medium" onClick={orderCheckout}>
                     Оформить заказ
                 </Button>
             </div>
             {activeModal &&
                 <Modal onClose={closeModal}>
-                    <OrderDetails onClose={closeModal}></OrderDetails>
+                    <OrderDetails />
                 </Modal>
             }
         </section>
     );
 }
-
-BurgerConstructor.propTypes = {
-    ingredients: ingredientsPropTypes
-};
 
 export default BurgerConstructor;
