@@ -15,19 +15,7 @@ const ingredientsSlice = createSlice({
     initialState: {
         ingredients: []
     },
-    reducers: {
-        incrementIngredientCounter: (state, action) => {
-            const ingredient = state.ingredients.find((element) => element._id === action.payload)
-            ++ingredient.__v;
-        },
-        decrementIngredientCounter: (state, action) => {
-            const ingredient = state.ingredients.find((element) => element._id === action.payload)
-            --ingredient.__v;
-        },
-        dropIngredientsCounter: (state) => {
-            state.ingredients.forEach(element => element.__v = 0);
-        }
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchIngredients.pending, () => {
             console.info("Pending...")
@@ -43,9 +31,3 @@ const ingredientsSlice = createSlice({
 })
 
 export default ingredientsSlice.reducer
-export const {
-    incrementIngredientCounter,
-    decrementIngredientCounter,
-    dropIngredientsCounter
-} = ingredientsSlice.actions
-

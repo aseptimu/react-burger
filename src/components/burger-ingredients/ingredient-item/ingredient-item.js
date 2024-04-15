@@ -6,11 +6,12 @@ import {useDispatch} from "react-redux";
 import {removeIngredient, setIngredient} from "../../../services/ingredient-details-slice";
 import {useDrag} from "react-dnd";
 import {DRAG_ELEMENT} from "../../../utils/constants";
-import ingredientsPropTypes from "../../../utils/prop-types";
+import {ingredientPropTypes} from "../../../utils/prop-types";
+import PropTypes from "prop-types";
 
-function IngredientItem(props) {
+function IngredientItem({counters, ...props}) {
     const [activeModal, setActiveModal] = useState(false);
-    const {__v, image, name, _id, price } = props;
+    const {image, name, _id, price } = props;
     const [{isDrag}, dragRef] = useDrag({
         type: DRAG_ELEMENT,
         item: {_id},
@@ -34,7 +35,7 @@ function IngredientItem(props) {
     return (
         <>
             <div onClick={openModal} ref={dragRef} style={{opacity: isDrag ? 0.5 : 1}}>
-                {__v !== 0 && <Counter count={__v} size="default" extraClass="m-1"/>}
+                {counters[_id] && <Counter count={counters[_id]} size="default" extraClass="m-1"/>}
                 <img className={styles.burger_element__image} draggable={false} src={image} alt={name} width={240}
                      height={120}/>
                 <div className={styles.total}>
@@ -48,5 +49,8 @@ function IngredientItem(props) {
     )
 }
 
-IngredientItem.propTypes = ingredientsPropTypes;
+IngredientItem.propTypes = {
+    props: ingredientPropTypes,
+    counters: PropTypes.object.isRequired
+};
 export default IngredientItem;

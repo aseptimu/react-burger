@@ -9,7 +9,6 @@ import ConstructorBun from "./constructor-bun/constructor-bun";
 import ConstructorIngredients from "./constructor-ingredients/constructor-ingredients";
 import {checkoutRequest} from "../../services/order-details-slice";
 import {clearConstructor} from "../../services/constructor-slice";
-import {dropIngredientsCounter} from "../../services/ingredients-slice";
 
 function BurgerConstructor() {
     const ingredients = useSelector(state => state.ingredients.ingredients)
@@ -28,7 +27,6 @@ function BurgerConstructor() {
             .then(response => {
                 if (response.payload.number) {
                     dispatch(clearConstructor())
-                    dispatch(dropIngredientsCounter());
                 }
             })
         setActiveModal(true);

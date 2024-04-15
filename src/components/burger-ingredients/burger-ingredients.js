@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useMemo, useRef, useState} from 'react';
 import styles from './burger-ingredient.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsGroup from "./ingredients-group/ingredients-group"
@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 
 function BurgerIngredients() {
     const {ingredients} = useSelector(store => store.ingredients);
+    const burgerConstructor = useSelector(store => store.burgerConstructor);
     const [currentTab, setActiveTab] = useState('bun');
     const containerRef = useRef(null);
     const ingredientRefs = {
@@ -13,6 +14,18 @@ function BurgerIngredients() {
         sauce: useRef(null),
         main: useRef(null)
     }
+
+    const ingredientsCounter = useMemo(() => {
+        const {bun, ingredients} = burgerConstructor;
+        const counters = {};
+        ingredients.forEach((ingredient) => {
+            if (!counters[ingredient._id]) counters[ingredient._id] = 0;
+            counters[ingredient._id]++;
+        })
+        if (bun) counters[bun._id] = 2;
+        return counters;
+    }, [burgerConstructor])
+
 
     const handleClick = (value) => {
         setActiveTab(value);
@@ -39,7 +52,7 @@ function BurgerIngredients() {
         const closestHeading = distances.reduce((acc, curr) => curr.distance < acc.distance && curr.isInBound ? curr : acc, distances[0])
         setActiveTab(closestHeading.key);
     }
-
+console.log(ingredientsCounter)
     return (
         <section>
             <h1 className={styles.main__header}>Соберите бургер</h1>
@@ -55,9 +68,9 @@ function BurgerIngredients() {
                 </Tab>
             </div>
             <section className={styles.ingredients__section} ref={containerRef} onScroll={handleScroll}>
-                <IngredientsGroup allIngredients={ingredients} type={'bun'} name={"Булки"} ref={ingredientRefs.bun}/>
-                <IngredientsGroup allIngredients={ingredients} type={'sauce'} name={"Соусы"} ref={ingredientRefs.sauce}/>
-                <IngredientsGroup allIngredients={ingredients} type={'main'} name={"Начинки"} ref={ingredientRefs.main}/>
+                <IngredientsGroup allIngredients={ingredients} counters={ingredientsCounter} type={'bun'} name={"Булки"} ref={ingredientRefs.bun}/>
+                <IngredientsGroup allIngredients={ingredients} counters={ingredientsCounter} type={'sauce'} name={"Соусы"} ref={ingredientRefs.sauce}/>
+                <IngredientsGroup allIngredients={ingredients} counters={ingredientsCounter} type={'main'} name={"Начинки"} ref={ingredientRefs.main}/>
             </section>
         </section>
     )

@@ -5,12 +5,11 @@ import PropTypes from "prop-types";
 import ingredientsPropTypes from "../../../utils/prop-types";
 
 
-const IngredientsGroup = forwardRef(({allIngredients, type, name}, ref) => {
-
+const IngredientsGroup = forwardRef(({allIngredients, type, name, counters}, ref) => {
     const ingredients = allIngredients?.filter(element => element.type === type).map(element => {
         return (
             <li key={element._id} className={styles.card} draggable={true}>
-                <IngredientItem key={element._id} {...element}/>
+                <IngredientItem key={element._id} {...element} counters={counters}/>
             </li>
         )
     });
@@ -28,7 +27,8 @@ const IngredientsGroup = forwardRef(({allIngredients, type, name}, ref) => {
 IngredientsGroup.propTypes = {
     allIngredients: ingredientsPropTypes,
     type: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    counters: PropTypes.object.isRequired
 };
 
 export default IngredientsGroup;
