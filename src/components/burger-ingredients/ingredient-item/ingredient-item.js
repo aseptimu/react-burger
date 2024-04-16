@@ -8,6 +8,7 @@ import {useDrag} from "react-dnd";
 import {DRAG_ELEMENT} from "../../../utils/constants";
 import {ingredientPropTypes} from "../../../utils/prop-types";
 import PropTypes from "prop-types";
+import {useNavigate} from "react-router-dom";
 
 function IngredientItem({counters, ...props}) {
     const [activeModal, setActiveModal] = useState(false);
@@ -22,7 +23,10 @@ function IngredientItem({counters, ...props}) {
 
     const dispatch = useDispatch();
 
+    const navigate = useNavigate();
+
     function openModal() {
+        navigate(`/ingredients/${_id}`)
         dispatch(setIngredient({...props}));
         setActiveModal(true);
     }
