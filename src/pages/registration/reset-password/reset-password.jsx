@@ -1,18 +1,18 @@
 import React, {useRef, useState} from 'react';
 import styles from '../registration.module.css'
-import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../../../components/app-header/app-header";
 import {Link} from "react-router-dom";
 import {HIDE_ICON, SHOW_ICON} from "../constants";
 
 
-function SignIn() {
-    const [email, setEmail] = useState("");
+function ResetPassword() {
+    const [code, setCode] = useState("");
     const [password, setPassword] = useState("");
     const [passwordIcon, setPasswordIcon] = useState(SHOW_ICON)
     const passwordInputRef = useRef(null)
-    const onEmailChange = e => {
-        setEmail(e.target.value);
+    const onCodeChange = e => {
+        setCode(e.target.value);
     }
     const onPasswordChange = e => {
         setPassword(e.target.value)
@@ -32,29 +32,28 @@ function SignIn() {
 
     return (
         <>
-            <AppHeader />
+            <AppHeader/>
             <main className={styles.main}>
                 <form className={styles.form}>
-                    <h1 className={styles.title}>Вход</h1>
-                    <EmailInput value={email} onChange={onEmailChange} placeholder="E-mail"/>
+                    <h1 className={styles.title}>Регистрация</h1>
                     <Input
                         value={password}
                         type="password"
                         onChange={onPasswordChange}
-                        placeholder="Пароль"
+                        placeholder="Введите новый пароль"
                         icon={passwordIcon}
                         onIconClick={showPassword}
                         ref={passwordInputRef}
                     />
+                    <Input value={code} onChange={onCodeChange} placeholder="Введите код из письма"/>
                     <Button htmlType="button" type="primary" size="medium">
-                        Войти
+                        Сохранить
                     </Button>
                 </form>
-                <p className={styles.text}>Вы — новый пользователь? <Link className={styles.link} to="/register">Зарегистрироваться</Link></p>
-                <p className={styles.text}>Забыли пароль? <Link className={styles.link} to="/forgot-password">Восстановить пароль</Link></p>
+                <p className={styles.text}>Вспомнили пароль? <Link className={styles.link} to="/login">Войти</Link></p>
             </main>
         </>
     );
 }
 
-export default SignIn;
+export default ResetPassword;

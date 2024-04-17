@@ -6,13 +6,18 @@ import {Link} from "react-router-dom";
 import {HIDE_ICON, SHOW_ICON} from "../constants";
 
 
-function SignIn() {
+function Register() {
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordIcon, setPasswordIcon] = useState(SHOW_ICON)
     const passwordInputRef = useRef(null)
     const onEmailChange = e => {
         setEmail(e.target.value);
+    }
+
+    const onNameChange = e => {
+        setName(e.target.value);
     }
     const onPasswordChange = e => {
         setPassword(e.target.value)
@@ -35,7 +40,8 @@ function SignIn() {
             <AppHeader />
             <main className={styles.main}>
                 <form className={styles.form}>
-                    <h1 className={styles.title}>Вход</h1>
+                    <h1 className={styles.title}>Регистрация</h1>
+                    <Input value={name} onChange={onNameChange} placeholder="Имя"/>
                     <EmailInput value={email} onChange={onEmailChange} placeholder="E-mail"/>
                     <Input
                         value={password}
@@ -47,14 +53,13 @@ function SignIn() {
                         ref={passwordInputRef}
                     />
                     <Button htmlType="button" type="primary" size="medium">
-                        Войти
+                        Зарегистрироваться
                     </Button>
                 </form>
-                <p className={styles.text}>Вы — новый пользователь? <Link className={styles.link} to="/register">Зарегистрироваться</Link></p>
-                <p className={styles.text}>Забыли пароль? <Link className={styles.link} to="/forgot-password">Восстановить пароль</Link></p>
+                <p className={styles.text}>Уже зарегистрированы? <Link className={styles.link} to="/login">Войти</Link></p>
             </main>
         </>
     );
 }
 
-export default SignIn;
+export default Register;

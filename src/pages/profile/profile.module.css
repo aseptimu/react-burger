@@ -1,0 +1,33 @@
+.main {
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+
+}
+
+.navigation {
+    composes: text text_type_main-large mb-20 mr-15 from global;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.navigation-item-inactive {
+    composes: text_color_inactive from global;
+}
+
+.description {
+    composes: text text_type_main-default text_color_inactive from global;
+    max-width: 320px;
+}
+
+.personal-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 60px;
+}

@@ -17,10 +17,11 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
+    align-items: center;
 }
 
 .text {
-    composes: text text_type_main-default text_color_inactive from global;
+    composes: text text_type_main-default text_color_inactive mb-4 from global;
 }
 
 .link {
