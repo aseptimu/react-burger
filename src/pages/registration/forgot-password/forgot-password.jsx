@@ -11,6 +11,10 @@ function ForgotPassword() {
         setEmail(e.target.value);
     }
 
+    const resetPassword = (e) => {
+
+    }
+
     return (
         <>
             <AppHeader />
@@ -18,7 +22,7 @@ function ForgotPassword() {
                 <form className={styles.form}>
                     <h1 className={styles.title}>Восстановление пароля</h1>
                     <EmailInput value={email} onChange={onEmailChange} placeholder="Укажите e-mail"/>
-                    <Button htmlType="button" type="primary" size="medium">
+                    <Button htmlType="button" type="primary" size="medium" onClick={resetPassword}>
                         Восстановить
                     </Button>
                 </form>

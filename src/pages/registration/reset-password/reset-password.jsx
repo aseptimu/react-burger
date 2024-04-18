@@ -3,7 +3,7 @@ import styles from '../registration.module.css'
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../../../components/app-header/app-header";
 import {Link} from "react-router-dom";
-import {HIDE_ICON, SHOW_ICON} from "../constants";
+import {HIDE_ICON, SHOW_ICON} from "../../constants";
 
 
 function ResetPassword() {
