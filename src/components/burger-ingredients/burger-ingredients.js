@@ -52,7 +52,7 @@ function BurgerIngredients() {
         const closestHeading = distances.reduce((acc, curr) => curr.distance < acc.distance && curr.isInBound ? curr : acc, distances[0])
         setActiveTab(closestHeading.key);
     }
-console.log(ingredientsCounter)
+
     return (
         <section>
             <h1 className={styles.main__header}>Соберите бургер</h1>

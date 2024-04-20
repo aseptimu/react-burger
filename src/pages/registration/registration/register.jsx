@@ -2,8 +2,10 @@ import React, {useRef, useState} from 'react';
 import styles from '../registration.module.css'
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../../../components/app-header/app-header";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {HIDE_ICON, SHOW_ICON} from "../../constants";
+import {registerUser} from "../../../services/user-slice";
+import {useDispatch} from "react-redux";
 
 
 function Register() {
@@ -12,6 +14,10 @@ function Register() {
     const [password, setPassword] = useState("");
     const [passwordIcon, setPasswordIcon] = useState(SHOW_ICON)
     const passwordInputRef = useRef(null)
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const onEmailChange = e => {
         setEmail(e.target.value);
     }
@@ -34,6 +40,17 @@ function Register() {
         }
     }
 
+    const onRegister = () => {
+        const userData = {email, password, name};
+        dispatch(registerUser(userData)).then((response) => {
+            if (!response.error) {
+                localStorage.setItem('accessToken', response.payload.accessToken);
+                localStorage.setItem('refreshToken', response.payload.refreshToken)
+                navigate('/');
+            }
+        });
+    }
+
 
     return (
         <>
@@ -52,7 +69,7 @@ function Register() {
                         onIconClick={showPassword}
                         ref={passwordInputRef}
                     />
-                    <Button htmlType="button" type="primary" size="medium" >
+                    <Button htmlType="button" type="primary" size="medium" onClick={onRegister}>
                         Зарегистрироваться
                     </Button>
                 </form>

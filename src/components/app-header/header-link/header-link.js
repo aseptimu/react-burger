@@ -1,19 +1,25 @@
 import style from "./header-link.module.css";
 import React from "react";
 import PropTypes from "prop-types";
+import {NavLink} from "react-router-dom";
 
 
-function HeaderLink({text, children}) {
+function HeaderLink({url, Icon, text}) {
     return (
-        <a href="#" className={style.header__link}>
-            {children}
-            <p className={`${style.text__header} ${text !== 'Конструктор' && style.text__header_inactive}`}>{text}</p>
-        </a>
-    )
+        <NavLink to={url} className={({ isActive }) => style.header__link + (!isActive ? ` ${style.text__header_inactive}` : '')}>
+            {({ isActive }) => (
+                <>
+                    <Icon type={isActive ? 'primary' : 'secondary'} />
+                    <p className={style.text__header}>{text}</p>
+                </>
+            )}
+        </NavLink>
+    );
 }
 
 HeaderLink.propTypes = {
-    text: PropTypes.string.isRequired,
-    children: PropTypes.node
+    url: PropTypes.string.isRequired,
+    Icon: PropTypes.func.isRequired,
+    text: PropTypes.string.isRequired
 };
 export default HeaderLink;

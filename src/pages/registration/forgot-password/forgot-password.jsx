@@ -2,17 +2,20 @@ import React, {useState} from 'react';
 import styles from '../registration.module.css'
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../../../components/app-header/app-header";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {forgotPasswordRequest} from "../../../utils/api";
 
 
 function ForgotPassword() {
     const [email, setEmail] = useState("");
+    const navigate = useNavigate();
     const onEmailChange = e => {
         setEmail(e.target.value);
     }
 
-    const resetPassword = (e) => {
-
+    const resetPassword = () => {
+        forgotPasswordRequest(email)
+            .then((success) => success && navigate('/reset-password'));
     }
 
     return (

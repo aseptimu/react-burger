@@ -1,5 +1,5 @@
 import React from 'react';
-import {BurgerIcon, Logo, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import {BurgerIcon, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import style from './app-header.module.css'
 import HeaderLink from "./header-link/header-link";
 
@@ -10,21 +10,15 @@ function AppHeader() {
             <nav>
                 <ul className={style.navigation__list}>
                     <li className="mr-2">
-                        <HeaderLink text={"Конструктор"}>
-                            <BurgerIcon type="primary"/>
-                        </HeaderLink>
+                        <HeaderLink Icon={BurgerIcon} text={'Конструктор'} url={'/'}/>
                     </li>
                     <li>
-                        <HeaderLink text={"Лента заказов"}>
-                            <ListIcon type="secondary"/>
-                        </HeaderLink>
+                        <HeaderLink Icon={ListIcon} text={'Лента заказов'} url={'/list'}/>
                     </li>
                 </ul>
             </nav>
-            <Logo />
-            <HeaderLink text={"Личный кабинет"}>
-                <ProfileIcon type="secondary"/>
-            </HeaderLink>
+            <Logo/>
+            <HeaderLink Icon={ProfileIcon} text={'Личный кабинет'} url={'/profile'}/>
         </header>
     );
 }

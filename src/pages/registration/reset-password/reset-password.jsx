@@ -4,6 +4,7 @@ import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components"
 import AppHeader from "../../../components/app-header/app-header";
 import {Link} from "react-router-dom";
 import {HIDE_ICON, SHOW_ICON} from "../../constants";
+import {resetPasswordRequest} from "../../../utils/api";
 
 
 function ResetPassword() {
@@ -29,6 +30,10 @@ function ResetPassword() {
         }
     }
 
+    const resetPassword = () => {
+        resetPasswordRequest(password, code).then(console.log);//TODO: then
+    }
+
 
     return (
         <>
@@ -46,7 +51,7 @@ function ResetPassword() {
                         ref={passwordInputRef}
                     />
                     <Input value={code} onChange={onCodeChange} placeholder="Введите код из письма"/>
-                    <Button htmlType="button" type="primary" size="medium">
+                    <Button htmlType="button" type="primary" size="medium" onClick={resetPassword}>
                         Сохранить
                     </Button>
                 </form>

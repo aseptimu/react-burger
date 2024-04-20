@@ -2,8 +2,10 @@ import React, {useRef, useState} from 'react';
 import styles from '../registration.module.css'
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../../../components/app-header/app-header";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {HIDE_ICON, SHOW_ICON} from "../../constants";
+import {useDispatch} from "react-redux";
+import {authUser} from "../../../services/user-slice";
 
 
 function SignIn() {
@@ -11,6 +13,10 @@ function SignIn() {
     const [password, setPassword] = useState("");
     const [passwordIcon, setPasswordIcon] = useState(SHOW_ICON)
     const passwordInputRef = useRef(null)
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const onEmailChange = e => {
         setEmail(e.target.value);
     }
@@ -29,6 +35,16 @@ function SignIn() {
         }
     }
 
+    const onLogin = () => {
+        const userData = {email, password};
+        dispatch(authUser(userData)).then((response) => {
+            if (!response.error) {
+                localStorage.setItem('accessToken', response.payload.accessToken);
+                localStorage.setItem('refreshToken', response.payload.refreshToken)
+                navigate('/');
+            }
+        });
+    }
 
     return (
         <>
@@ -46,7 +62,7 @@ function SignIn() {
                         onIconClick={showPassword}
                         ref={passwordInputRef}
                     />
-                    <Button htmlType="button" type="primary" size="medium">
+                    <Button htmlType="button" type="primary" size="medium" onClick={onLogin}>
                         Войти
                     </Button>
                 </form>

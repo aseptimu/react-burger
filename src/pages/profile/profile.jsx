@@ -1,47 +1,34 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import AppHeader from "../../components/app-header/app-header";
 import styles from './profile.module.css';
-import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {NavLink} from "react-router-dom";
 import {EDIT_ICON} from "../constants";
+import {useSelector} from "react-redux";
 
 function Profile() {
-    const [isNameDisabled, setIsNameDisabled] = useState(true);
-    const [isEmailDisabled, setIsEmailDisabled] = useState(true);
-    const [isPasswordDisabled, setIsPasswordDisabled] = useState(true);
+    const user = useSelector(store => store.user);
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+    const [name, setName] = useState(user.name);
+    const [email, setEmail] = useState(user.email);
     const [password, setPassword] = useState("");
 
-    const nameInputRef = useRef(null)
-    const emailInputRef = useRef(null)
-    const passwordInputRef = useRef(null)
+    const [isEdited, setIsEdited] = useState(false);
 
-    const onNameChange = () => {
+    useEffect(() => {
+        const isEditedFields = user.name !== name || user.email !== email || password !== '';
+        setIsEdited(isEditedFields);
+    }, [name, email, password, user.name, user.email]);
 
-    }
-    const onEmailChange = () => {
+    const onNameChange = (e) => setName(e.target.value);
+    const onEmailChange = (e) => setEmail(e.target.value);
+    const onPasswordChange = (e) => setPassword(e.target.value);
 
-    }
-    const onPasswordChange = () => {
-
-    }
-
-
-    const onNameIconClick = () => {
-        setIsNameDisabled(!isNameDisabled);
-        nameInputRef.current.focus();
-    }
-
-    const onEmailIconClick = () => {
-
-    }
-
-    const onPasswordIconClick = () => {
-
-    }
-
+    const setDefaultState = () => {
+        setName(user.name);
+        setEmail(user.email);
+        setPassword('');
+    };
 
     return (
         <>
@@ -49,9 +36,15 @@ function Profile() {
             <main className={styles.main}>
                 <div className={styles.navigation}>
                     <ul className={styles.navigation_list}>
-                        <li className={styles.navigation_list_item}><Link to={'/profile'}>Профиль</Link></li>
-                        <li className={`${styles.navigation_list_item} ${styles.navigation_item_inactive}`}><Link to={'/profile/orders'}>История заказов</Link></li>
-                        <li className={`${styles.navigation_list_item} ${styles.navigation_item_inactive}`}><Link to={'/exit'}>Выход</Link></li>
+                        <li><NavLink
+                            className={({isActive}) => (`${styles.navigation_list_item} ${!isActive && styles.navigation_item_inactive}`)}
+                            to={'/profile'}>Профиль</NavLink></li>
+                        <li><NavLink
+                            className={({isActive}) => (`${styles.navigation_list_item} ${!isActive && styles.navigation_item_inactive}`)}
+                            to={'/profile/orders'}>История заказов</NavLink></li>
+                        <li><NavLink
+                            className={({isActive}) => (`${styles.navigation_list_item} ${!isActive && styles.navigation_item_inactive}`)}
+                            to={'/exit'}>Выход</NavLink></li>
                     </ul>
                     <p className={styles.description}>В этом разделе вы можете изменить свои персональные данные</p>
                 </div>
@@ -62,9 +55,6 @@ function Profile() {
                         onChange={onNameChange}
                         placeholder="Имя"
                         icon={EDIT_ICON}
-                        onIconClick={onNameIconClick}
-                        ref={nameInputRef}
-                        disabled={isNameDisabled}
                     />
                     <Input
                         value={email}
@@ -72,9 +62,6 @@ function Profile() {
                         onChange={onEmailChange}
                         placeholder="Логин"
                         icon={EDIT_ICON}
-                        onIconClick={onEmailIconClick}
-                        ref={emailInputRef}
-                        disabled={isEmailDisabled}
                     />
                     <Input
                         value={password}
@@ -82,10 +69,17 @@ function Profile() {
                         onChange={onPasswordChange}
                         placeholder="Пароль"
                         icon={EDIT_ICON}
-                        onIconClick={onPasswordIconClick}
-                        ref={passwordInputRef}
-                        disabled={isPasswordDisabled}
                     />
+                    {
+                        isEdited && <div>
+                            <Button htmlType="button" type="secondary" size="medium" onClick={setDefaultState}>
+                                Отмена
+                            </Button>
+                            <Button htmlType="button" type="primary" size="medium">
+                                Сохранить
+                            </Button>
+                        </div>
+                    }
                 </section>
             </main>
         </>

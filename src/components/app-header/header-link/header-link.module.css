@@ -6,6 +6,7 @@ a {
 .header__link {
     composes: pt-4 pb-4 pl-5 pr-5 from global;
     display: flex;
+    align-items: center;
 }
 
 .text__header {

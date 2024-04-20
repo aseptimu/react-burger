@@ -7,7 +7,7 @@ import Modal from "../modal/modal";
 import {useDispatch, useSelector} from "react-redux";
 import ConstructorBun from "./constructor-bun/constructor-bun";
 import ConstructorIngredients from "./constructor-ingredients/constructor-ingredients";
-import {checkoutRequest} from "../../services/order-details-slice";
+import {orderCheckout} from "../../services/order-details-slice";
 import {clearConstructor} from "../../services/constructor-slice";
 
 function BurgerConstructor() {
@@ -22,8 +22,8 @@ function BurgerConstructor() {
         constructor.ingredients?.reduce((acc, curr) => acc + curr.price, 0) + (constructor.bun ? constructor.bun.price * 2 : 0)
     ), [constructor.bun, constructor.ingredients])
 
-    function orderCheckout() {
-        dispatch(checkoutRequest(ingredients?.map((element) => element._id)))
+    function onOrderCheckout() {
+        dispatch(orderCheckout(ingredients?.map((element) => element._id)))
             .then(response => {
                 if (response.payload.number) {
                     dispatch(clearConstructor())
@@ -48,7 +48,7 @@ function BurgerConstructor() {
                     <p className={`${styles.amount}`}>{total || 0}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button disabled={!constructor.bun} htmlType="button" type="primary" size="medium" onClick={orderCheckout}>
+                <Button disabled={!constructor.bun} htmlType="button" type="primary" size="medium" onClick={onOrderCheckout}>
                     Оформить заказ
                 </Button>
             </div>
