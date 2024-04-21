@@ -20,32 +20,42 @@ const userSlice = createSlice({
     name: 'user',
     initialState: {
         name: '',
-        email: ''
+        email: '',
+        isAuthorized: false,
+        isAuthInProgress: false,
     },
     extraReducers: (builder) => {
-        builder.addCase(registerUser.pending, () => {
+        builder.addCase(registerUser.pending, (state) => {
             console.info("Registering a new user");
+            state.isAuthInProgress = true;
         });
         builder.addCase(registerUser.fulfilled, (state, action) => {
             console.info("Register: success!")
-            console.log(action)
+
             state.name = action.payload.user.name;
             state.email = action.payload.user.email;
+            state.isAuthorized = true;
+            state.isAuthInProgress = false;
         });
-        builder.addCase(registerUser.rejected, (_, action) => {
+        builder.addCase(registerUser.rejected, (state, action) => {
             console.error("Register: fail!\n", action.error.stack);
+            state.isAuthInProgress = false;
         });
 
-        builder.addCase(authUser.pending, () => {
+        builder.addCase(authUser.pending, (state) => {
             console.info("Login in process...");
+            state.isAuthInProgress = true;
         });
         builder.addCase(authUser.fulfilled, (state, action) => {
             console.info("Login: success!")
             state.name = action.payload.user.name;
             state.email = action.payload.user.email;
+            state.isAuthorized = true;
+            state.isAuthInProgress = false;
         });
-        builder.addCase(authUser.rejected, (_, action) => {
+        builder.addCase(authUser.rejected, (state, action) => {
             console.error("Login: fail!\n", action.error.stack);
+            state.isAuthInProgress = false;
         });
     }
 })

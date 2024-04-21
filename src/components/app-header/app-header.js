@@ -13,7 +13,7 @@ function AppHeader() {
                         <HeaderLink Icon={BurgerIcon} text={'Конструктор'} url={'/'}/>
                     </li>
                     <li>
-                        <HeaderLink Icon={ListIcon} text={'Лента заказов'} url={'/list'}/>
+                        <HeaderLink Icon={ListIcon} text={'Лента заказов'} url={'/feed'}/>
                     </li>
                 </ul>
             </nav>

@@ -1,7 +1,6 @@
 import React, {useRef, useState} from 'react';
 import styles from '../registration.module.css'
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import AppHeader from "../../../components/app-header/app-header";
 import {Link, useNavigate} from "react-router-dom";
 import {HIDE_ICON, SHOW_ICON} from "../../constants";
 import {useDispatch} from "react-redux";
@@ -48,7 +47,6 @@ function SignIn() {
 
     return (
         <>
-            <AppHeader />
             <main className={styles.main}>
                 <form className={styles.form}>
                     <h1 className={styles.title}>Вход</h1>

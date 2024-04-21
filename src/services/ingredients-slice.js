@@ -9,19 +9,19 @@ export const fetchIngredients = createAsyncThunk(
 const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState: {
-        ingredients: []
+        ingredients: [],
     },
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchIngredients.pending, () => {
-            console.info("Pending...")
+            console.info("Pending...");
         });
         builder.addCase(fetchIngredients.fulfilled, (state, action) => {
             state.ingredients = action.payload;
         });
         builder.addCase(fetchIngredients.rejected, (state, action) => {
-            state.ingredients = state.initialState;
             console.error("Error fetching ingredients\n", action.error.stack)
+            state.ingredients = state.initialState;
         });
     }
 });

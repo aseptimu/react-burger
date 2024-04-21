@@ -1,7 +1,6 @@
 import React, {useRef, useState} from 'react';
 import styles from '../registration.module.css'
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import AppHeader from "../../../components/app-header/app-header";
 import {Link} from "react-router-dom";
 import {HIDE_ICON, SHOW_ICON} from "../../constants";
 import {resetPasswordRequest} from "../../../utils/api";
@@ -37,7 +36,6 @@ function ResetPassword() {
 
     return (
         <>
-            <AppHeader/>
             <main className={styles.main}>
                 <form className={styles.form}>
                     <h1 className={styles.title}>Регистрация</h1>

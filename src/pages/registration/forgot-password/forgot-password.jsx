@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import styles from '../registration.module.css'
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import AppHeader from "../../../components/app-header/app-header";
 import {Link, useNavigate} from "react-router-dom";
 import {forgotPasswordRequest} from "../../../utils/api";
 
@@ -20,7 +19,6 @@ function ForgotPassword() {
 
     return (
         <>
-            <AppHeader />
             <main className={styles.main}>
                 <form className={styles.form}>
                     <h1 className={styles.title}>Восстановление пароля</h1>

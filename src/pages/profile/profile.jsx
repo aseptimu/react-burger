@@ -1,5 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
-import AppHeader from "../../components/app-header/app-header";
+import React, {useEffect, useState} from 'react';
 import styles from './profile.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {NavLink} from "react-router-dom";
@@ -32,7 +31,6 @@ function Profile() {
 
     return (
         <>
-            <AppHeader/>
             <main className={styles.main}>
                 <div className={styles.navigation}>
                     <ul className={styles.navigation_list}>

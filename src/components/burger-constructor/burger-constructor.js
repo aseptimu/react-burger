@@ -9,11 +9,16 @@ import ConstructorBun from "./constructor-bun/constructor-bun";
 import ConstructorIngredients from "./constructor-ingredients/constructor-ingredients";
 import {orderCheckout} from "../../services/order-details-slice";
 import {clearConstructor} from "../../services/constructor-slice";
+import {useNavigate} from "react-router-dom";
 
 function BurgerConstructor() {
     const ingredients = useSelector(state => state.ingredients.ingredients)
     const constructor = useSelector(state => state.burgerConstructor);
     const dispatch =  useDispatch();
+
+    const isAuthorized = useSelector(store => store.user.isAuthorized);
+
+    const navigate = useNavigate();
 
     const [activeModal, setActiveModal] = useState(false);
 
@@ -23,13 +28,17 @@ function BurgerConstructor() {
     ), [constructor.bun, constructor.ingredients])
 
     function onOrderCheckout() {
-        dispatch(orderCheckout(ingredients?.map((element) => element._id)))
-            .then(response => {
-                if (response.payload.number) {
-                    dispatch(clearConstructor())
-                }
-            })
-        setActiveModal(true);
+        if (!isAuthorized) {
+            navigate('/login');
+        } else {
+            dispatch(orderCheckout(ingredients?.map((element) => element._id)))
+                .then(response => {
+                    if (response.payload.number) {
+                        dispatch(clearConstructor())
+                    }
+                })
+            setActiveModal(true);
+        }
     }
 
     function closeModal() {

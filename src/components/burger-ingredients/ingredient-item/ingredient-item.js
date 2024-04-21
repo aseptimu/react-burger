@@ -1,17 +1,12 @@
-import {useState} from 'react';
 import styles from './ingredient-item.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import {useDispatch} from "react-redux";
-import {removeIngredient, setIngredient} from "../../../services/ingredient-details-slice";
 import {useDrag} from "react-dnd";
 import {DRAG_ELEMENT} from "../../../utils/constants";
 import {ingredientPropTypes} from "../../../utils/prop-types";
 import PropTypes from "prop-types";
-import {useNavigate} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 function IngredientItem({counters, ...props}) {
-    const [activeModal, setActiveModal] = useState(false);
     const {image, name, _id, price } = props;
     const [{isDrag}, dragRef] = useDrag({
         type: DRAG_ELEMENT,
@@ -21,24 +16,15 @@ function IngredientItem({counters, ...props}) {
         })
     });
 
-    const dispatch = useDispatch();
-
-    const navigate = useNavigate();
-
-    function openModal() {
-        navigate(`/ingredients/${_id}`)
-        dispatch(setIngredient({...props}));
-        setActiveModal(true);
-    }
-
-    function closeModal() {
-        dispatch(removeIngredient())
-        setActiveModal(false);
-    }
+    const location = useLocation();
 
     return (
-        <>
-            <div onClick={openModal} ref={dragRef} style={{opacity: isDrag ? 0.5 : 1}}>
+        <Link
+            key={_id}
+            to={`/ingredients/${_id}`}
+            state={{ background: location}}
+        >
+            <div ref={dragRef} style={{opacity: isDrag ? 0.5 : 1}}>
                 {counters[_id] && <Counter count={counters[_id]} size="default" extraClass="m-1"/>}
                 <img className={styles.burger_element__image} draggable={false} src={image} alt={name} width={240}
                      height={120}/>
@@ -48,8 +34,8 @@ function IngredientItem({counters, ...props}) {
                 </div>
                 <p className={`${styles.description}`}>{name}</p>
             </div>
-            {activeModal && <IngredientDetails onClose={closeModal}/>}
-        </>
+        </Link>
+
     )
 }
 
