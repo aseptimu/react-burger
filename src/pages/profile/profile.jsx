@@ -3,7 +3,8 @@ import styles from './profile.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {NavLink} from "react-router-dom";
 import {EDIT_ICON} from "../constants";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {updateUser, userLogout} from "../../services/user-slice";
 
 function Profile() {
     const user = useSelector(store => store.user);
@@ -13,6 +14,8 @@ function Profile() {
     const [password, setPassword] = useState("");
 
     const [isEdited, setIsEdited] = useState(false);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const isEditedFields = user.name !== name || user.email !== email || password !== '';
@@ -29,6 +32,20 @@ function Profile() {
         setPassword('');
     };
 
+    const handleChangeUserData = () => {
+        dispatch(updateUser({email, password, name}));
+    }
+
+    const handleLogout = () => {
+        const token = localStorage.getItem('refreshToken')
+        dispatch(userLogout(token)).then((response) => {
+            if (!response.error) {
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
+            }
+        });
+    }
+
     return (
         <>
             <main className={styles.main}>
@@ -42,7 +59,7 @@ function Profile() {
                             to={'/profile/orders'}>История заказов</NavLink></li>
                         <li><NavLink
                             className={({isActive}) => (`${styles.navigation_list_item} ${!isActive && styles.navigation_item_inactive}`)}
-                            to={'/exit'}>Выход</NavLink></li>
+                            to={'/login'} onClick={handleLogout}>Выход</NavLink></li>
                     </ul>
                     <p className={styles.description}>В этом разделе вы можете изменить свои персональные данные</p>
                 </div>
@@ -73,7 +90,7 @@ function Profile() {
                             <Button htmlType="button" type="secondary" size="medium" onClick={setDefaultState}>
                                 Отмена
                             </Button>
-                            <Button htmlType="button" type="primary" size="medium">
+                            <Button htmlType="button" type="primary" size="medium" onClick={handleChangeUserData}>
                                 Сохранить
                             </Button>
                         </div>

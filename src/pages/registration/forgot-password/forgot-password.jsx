@@ -13,8 +13,14 @@ function ForgotPassword() {
     }
 
     const resetPassword = () => {
+
         forgotPasswordRequest(email)
-            .then((success) => success && navigate('/reset-password'));
+            .then((response) => {
+                if (!response.error) {
+                    localStorage.setItem('resetPassword', 'true');
+                    navigate('/reset-password');
+                }
+            });
     }
 
     return (

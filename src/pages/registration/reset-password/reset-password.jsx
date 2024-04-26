@@ -1,7 +1,7 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styles from '../registration.module.css'
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {HIDE_ICON, SHOW_ICON} from "../../constants";
 import {resetPasswordRequest} from "../../../utils/api";
 
@@ -9,8 +9,10 @@ import {resetPasswordRequest} from "../../../utils/api";
 function ResetPassword() {
     const [code, setCode] = useState("");
     const [password, setPassword] = useState("");
-    const [passwordIcon, setPasswordIcon] = useState(SHOW_ICON)
-    const passwordInputRef = useRef(null)
+    const [passwordIcon, setPasswordIcon] = useState(SHOW_ICON);
+    const passwordInputRef = useRef(null);
+
+    const navigate = useNavigate();
     const onCodeChange = e => {
         setCode(e.target.value);
     }
@@ -30,15 +32,26 @@ function ResetPassword() {
     }
 
     const resetPassword = () => {
-        resetPasswordRequest(password, code).then(console.log);//TODO: then
+        resetPasswordRequest(password, code).then((response) => {
+            if (!response.error) {
+                localStorage.removeItem('resetPassword')
+                navigate('/');
+            }
+        });
     }
 
+    useEffect(() => {
+        const isResetPassword = localStorage.getItem('resetPassword')
+        if (!isResetPassword) {
+            navigate('/');
+        }
+    }, [])
 
     return (
         <>
             <main className={styles.main}>
                 <form className={styles.form}>
-                    <h1 className={styles.title}>Регистрация</h1>
+                    <h1 className={styles.title}>Восстановление пароля</h1>
                     <Input
                         value={password}
                         type="password"

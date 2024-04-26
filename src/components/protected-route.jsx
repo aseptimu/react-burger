@@ -15,7 +15,7 @@ function ProtectedRoute({forAuthorized = false, children}) {
         const {from} = location.state || {from: {pathname: '/'}}
         return <Navigate to={from}/>;
     }
-console.log(forAuthorized, isAuthorized)
+
     if (forAuthorized && !isAuthorized) {
         return <Navigate to={'/login'} state={{from: location}}/>;
     }
@@ -25,7 +25,6 @@ console.log(forAuthorized, isAuthorized)
 
 export const UnauthorizedRoute = ProtectedRoute;
 export const AuthorizedRoute = ({ children }) => {
-    // console.log(children)
     return (
         <ProtectedRoute forAuthorized={true} >
             {children}

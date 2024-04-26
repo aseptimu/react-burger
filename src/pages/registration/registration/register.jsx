@@ -44,7 +44,7 @@ function Register() {
         dispatch(registerUser(userData)).then((response) => {
             if (!response.error) {
                 localStorage.setItem('accessToken', response.payload.accessToken);
-                localStorage.setItem('refreshToken', response.payload.refreshToken)
+                localStorage.setItem('refreshToken', response.payload.refreshToken);
                 navigate('/');
             }
         });

@@ -1,10 +1,24 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {loginRequest, registerRequest} from "../utils/api";
+import {fetchUserRequest, loginRequest, logoutRequest, registerRequest, updateUserRequest} from "../utils/api";
 
 // export const fetchTokens = createAsyncThunk(
 //     'auth/fetch',
 //     fetchTokensRequest
 // )//TODO: переделать. Тут подразумевается первоначальный запрос за токеном. Но это не thunk
+
+export const updateUser = createAsyncThunk(
+    'patch/user',
+    updateUserRequest
+)
+export const getUser = createAsyncThunk(
+    'auth/user',
+    fetchUserRequest
+)
+
+export const userLogout = createAsyncThunk(
+    'user/logout',
+    logoutRequest
+)
 
 export const registerUser = createAsyncThunk(
     'user/register',
@@ -55,6 +69,54 @@ const userSlice = createSlice({
         });
         builder.addCase(authUser.rejected, (state, action) => {
             console.error("Login: fail!\n", action.error.stack);
+            state.isAuthInProgress = false;
+        });
+
+        builder.addCase(getUser.pending, (state) => {
+            console.info("Login in process...");
+            state.isAuthInProgress = true;
+        });
+        builder.addCase(getUser.fulfilled, (state, action) => {
+            console.info("Login: success!")
+            state.name = action.payload.user.name;
+            state.email = action.payload.user.email;
+            state.isAuthorized = true;
+            state.isAuthInProgress = false;
+        });
+        builder.addCase(getUser.rejected, (state, action) => {
+            console.error("Login: fail!\n", action.error.stack);
+            state.isAuthInProgress = false;
+        });
+
+        builder.addCase(updateUser.pending, (state) => {
+            console.info("Login in process...");
+            state.isAuthInProgress = true;
+        });
+        builder.addCase(updateUser.fulfilled, (state, action) => {
+            console.info("Login: success!")
+            state.name = action.payload.user.name;
+            state.email = action.payload.user.email;
+            state.isAuthorized = true;
+            state.isAuthInProgress = false;
+        });
+        builder.addCase(updateUser.rejected, (state, action) => {
+            console.error("Login: fail!\n", action.error.stack);
+            state.isAuthInProgress = false;
+        });
+
+        builder.addCase(userLogout.pending, (state) => {
+            console.info("Logout in process...");
+            state.isAuthInProgress = true;
+        });
+        builder.addCase(userLogout.fulfilled, (state) => {
+            console.info("Logout: success!")
+            state.name = '';
+            state.email = '';
+            state.isAuthorized = false;
+            state.isAuthInProgress = false;
+        });
+        builder.addCase(userLogout.rejected, (state, action) => {
+            console.error("Logout: fail!\n", action.error.stack);
             state.isAuthInProgress = false;
         });
     }

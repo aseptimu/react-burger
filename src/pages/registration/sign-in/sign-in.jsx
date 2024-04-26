@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import styles from '../registration.module.css'
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {HIDE_ICON, SHOW_ICON} from "../../constants";
 import {useDispatch} from "react-redux";
 import {authUser} from "../../../services/user-slice";
@@ -15,6 +15,7 @@ function SignIn() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const onEmailChange = e => {
         setEmail(e.target.value);
@@ -39,8 +40,12 @@ function SignIn() {
         dispatch(authUser(userData)).then((response) => {
             if (!response.error) {
                 localStorage.setItem('accessToken', response.payload.accessToken);
-                localStorage.setItem('refreshToken', response.payload.refreshToken)
-                navigate('/');
+                localStorage.setItem('refreshToken', response.payload.refreshToken);
+                if (location.state?.from.pathname === '/profile') {
+                    navigate('/profile');
+                } else {
+                    navigate('/');
+                }
             }
         });
     }
