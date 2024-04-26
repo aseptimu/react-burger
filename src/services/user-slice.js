@@ -1,11 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {fetchUserRequest, loginRequest, logoutRequest, registerRequest, updateUserRequest} from "../utils/api";
 
-// export const fetchTokens = createAsyncThunk(
-//     'auth/fetch',
-//     fetchTokensRequest
-// )//TODO: переделать. Тут подразумевается первоначальный запрос за токеном. Но это не thunk
-
 export const updateUser = createAsyncThunk(
     'patch/user',
     updateUserRequest
