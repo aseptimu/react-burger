@@ -5,28 +5,16 @@ import {Link, useNavigate} from "react-router-dom";
 import {HIDE_ICON, SHOW_ICON} from "../../constants";
 import {registerUser} from "../../../services/user-slice";
 import {useDispatch} from "react-redux";
+import {useForm} from "../../../hooks/hooks";
 
 
 function Register() {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordIcon, setPasswordIcon] = useState(SHOW_ICON)
-    const passwordInputRef = useRef(null)
+    const {values, handleChange} = useForm({});
+    const [passwordIcon, setPasswordIcon] = useState(SHOW_ICON);
+    const passwordInputRef = useRef(null);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const onEmailChange = e => {
-        setEmail(e.target.value);
-    }
-
-    const onNameChange = e => {
-        setName(e.target.value);
-    }
-    const onPasswordChange = e => {
-        setPassword(e.target.value)
-    }
 
     const showPassword = () => {
         const type = passwordInputRef.current.type
@@ -39,8 +27,9 @@ function Register() {
         }
     }
 
-    const onRegister = () => {
-        const userData = {email, password, name};
+    const onRegister = (e) => {
+        e.preventDefault();
+        const userData = {email: values.email, password: values.password, name: values.name};
         dispatch(registerUser(userData)).then((response) => {
             if (!response.error) {
                 localStorage.setItem('accessToken', response.payload.accessToken);
@@ -54,20 +43,21 @@ function Register() {
     return (
         <>
             <main className={styles.main}>
-                <form className={styles.form}>
+                <form className={styles.form} onSubmit={(e) => onRegister(e)}>
                     <h1 className={styles.title}>Регистрация</h1>
-                    <Input value={name} onChange={onNameChange} placeholder="Имя"/>
-                    <EmailInput value={email} onChange={onEmailChange} placeholder="E-mail"/>
+                    <Input value={values.name} name="name" onChange={handleChange} placeholder="Имя"/>
+                    <EmailInput value={values.email} name="email" onChange={handleChange} placeholder="E-mail"/>
                     <Input
-                        value={password}
+                        value={values.password}
+                        name="password"
                         type="password"
-                        onChange={onPasswordChange}
+                        onChange={handleChange}
                         placeholder="Пароль"
                         icon={passwordIcon}
                         onIconClick={showPassword}
                         ref={passwordInputRef}
                     />
-                    <Button htmlType="button" type="primary" size="medium" onClick={onRegister}>
+                    <Button htmlType="submit" type="primary" size="medium">
                         Зарегистрироваться
                     </Button>
                 </form>

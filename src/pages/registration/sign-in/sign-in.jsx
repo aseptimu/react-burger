@@ -5,24 +5,18 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import {HIDE_ICON, SHOW_ICON} from "../../constants";
 import {useDispatch} from "react-redux";
 import {authUser} from "../../../services/user-slice";
+import {useForm} from "../../../hooks/hooks";
 
 
 function SignIn() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordIcon, setPasswordIcon] = useState(SHOW_ICON)
-    const passwordInputRef = useRef(null)
+    const {values, handleChange} = useForm({});
+    const [passwordIcon, setPasswordIcon] = useState(SHOW_ICON);
+    const passwordInputRef = useRef(null);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
-    const onEmailChange = e => {
-        setEmail(e.target.value);
-    }
-    const onPasswordChange = e => {
-        setPassword(e.target.value)
-    }
 
     const showPassword = () => {
         const type = passwordInputRef.current.type
@@ -35,8 +29,10 @@ function SignIn() {
         }
     }
 
-    const onLogin = () => {
-        const userData = {email, password};
+    const onLogin = (e) => {
+        e.preventDefault();
+        const userData = {email: values.email, password: values.password};
+
         dispatch(authUser(userData)).then((response) => {
             if (!response.error) {
                 localStorage.setItem('accessToken', response.payload.accessToken);
@@ -53,19 +49,20 @@ function SignIn() {
     return (
         <>
             <main className={styles.main}>
-                <form className={styles.form}>
+                <form className={styles.form} onSubmit={(e) => onLogin(e)}>
                     <h1 className={styles.title}>Вход</h1>
-                    <EmailInput value={email} onChange={onEmailChange} placeholder="E-mail"/>
+                    <EmailInput value={values.email} name="email" onChange={handleChange} placeholder="E-mail"/>
                     <Input
-                        value={password}
+                        value={values.password}
+                        name="password"
                         type="password"
-                        onChange={onPasswordChange}
+                        onChange={handleChange}
                         placeholder="Пароль"
                         icon={passwordIcon}
                         onIconClick={showPassword}
                         ref={passwordInputRef}
                     />
-                    <Button htmlType="button" type="primary" size="medium" onClick={onLogin}>
+                    <Button htmlType="submit" type="primary" size="medium">
                         Войти
                     </Button>
                 </form>
