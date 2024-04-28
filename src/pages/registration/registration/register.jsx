@@ -43,12 +43,12 @@ function Register() {
     return (
         <>
             <main className={styles.main}>
-                <form className={styles.form} onSubmit={(e) => onRegister(e)}>
+                <form className={styles.form} onSubmit={onRegister}>
                     <h1 className={styles.title}>Регистрация</h1>
-                    <Input value={values.name} name="name" onChange={handleChange} placeholder="Имя"/>
-                    <EmailInput value={values.email} name="email" onChange={handleChange} placeholder="E-mail"/>
+                    <Input value={values.name || ""} name="name" onChange={handleChange} placeholder="Имя"/>
+                    <EmailInput value={values.email || ""} name="email" onChange={handleChange} placeholder="E-mail"/>
                     <Input
-                        value={values.password}
+                        value={values.password || ""}
                         name="password"
                         type="password"
                         onChange={handleChange}

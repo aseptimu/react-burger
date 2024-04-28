@@ -49,11 +49,11 @@ function SignIn() {
     return (
         <>
             <main className={styles.main}>
-                <form className={styles.form} onSubmit={(e) => onLogin(e)}>
+                <form className={styles.form} onSubmit={onLogin}>
                     <h1 className={styles.title}>Вход</h1>
-                    <EmailInput value={values.email} name="email" onChange={handleChange} placeholder="E-mail"/>
+                    <EmailInput value={values.email || ""} name="email" onChange={handleChange} placeholder="E-mail"/>
                     <Input
-                        value={values.password}
+                        value={values.password || ""}
                         name="password"
                         type="password"
                         onChange={handleChange}

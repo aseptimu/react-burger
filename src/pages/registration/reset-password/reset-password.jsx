@@ -45,10 +45,10 @@ function ResetPassword() {
     return (
         <>
             <main className={styles.main}>
-                <form className={styles.form} onSubmit={(e) => resetPassword(e)}>
+                <form className={styles.form} onSubmit={resetPassword}>
                     <h1 className={styles.title}>Восстановление пароля</h1>
                     <Input
-                        value={values.password}
+                        value={values.password || ""}
                         name="password"
                         type="password"
                         onChange={handleChange}
@@ -57,7 +57,7 @@ function ResetPassword() {
                         onIconClick={showPassword}
                         ref={passwordInputRef}
                     />
-                    <Input value={values.code} name="code" onChange={handleChange} placeholder="Введите код из письма"/>
+                    <Input value={values.code || ""} name="code" onChange={handleChange} placeholder="Введите код из письма"/>
                     <Button htmlType="submit" type="primary" size="medium">
                         Сохранить
                     </Button>

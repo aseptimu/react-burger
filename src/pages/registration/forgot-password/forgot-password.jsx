@@ -24,9 +24,9 @@ function ForgotPassword() {
     return (
         <>
             <main className={styles.main}>
-                <form className={styles.form} onSubmit={(e) => resetPassword(e)}>
+                <form className={styles.form} onSubmit={resetPassword}>
                     <h1 className={styles.title}>Восстановление пароля</h1>
-                    <EmailInput value={values.email} name="email" onChange={handleChange} placeholder="Укажите e-mail"/>
+                    <EmailInput value={values.email || ""} name="email" onChange={handleChange} placeholder="Укажите e-mail"/>
                     <Button htmlType="submit" type="primary" size="medium">
                         Восстановить
                     </Button>
