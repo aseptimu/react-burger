@@ -1,26 +1,39 @@
-import {createSlice, nanoid} from "@reduxjs/toolkit";
+import {createSlice, nanoid, PayloadAction} from "@reduxjs/toolkit";
+import {TIngredient, TIngredients} from "../utils/types";
+
+type TDragAndDropIndexes = {
+    dragIndex: number;
+    hoverIndex: number;
+};
+
+type TDragAndDropIngredient = {
+    ingredient: TIngredient;
+    hoverIndex: number;
+}
+
+const initialState: TIngredients & {bun: null | string} = {
+    bun: null,
+    ingredients: [],
+};
 
 const constructorSlice = createSlice({
     name: 'constructor',
-    initialState: {
-        bun: null,
-        ingredients: [],
-    },
+    initialState,
     reducers: {
-        setBun: (state, action) => {
+        setBun: (state, action: PayloadAction<string>) => {
             state.bun = action.payload;
         },
-        moveIngredient: (state, action) => {
+        moveIngredient: (state, action: PayloadAction<TDragAndDropIndexes>) => {
             const { dragIndex, hoverIndex } = action.payload;
             const dragIngredient = state.ingredients[dragIndex];
             state.ingredients.splice(dragIndex, 1);
             state.ingredients.splice(hoverIndex, 0, dragIngredient);
         },
-        setIngredient: (state, action) => {
+        setIngredient: (state, action: PayloadAction<TDragAndDropIngredient>) => {
             const {ingredient, hoverIndex} = action.payload;
             state.ingredients.splice(hoverIndex, 0, {...ingredient, nanoid: nanoid()});
         },
-        removeIngredient: (state, action) => {
+        removeIngredient: (state, action: PayloadAction<string>) => {
             state.ingredients = state.ingredients.filter((element) => element.nanoid !== action.payload);
         },
         clearConstructor: (state) => {

@@ -1,11 +1,25 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {fetchUserRequest, loginRequest, logoutRequest, registerRequest, updateUserRequest} from "../utils/api";
 
+type userState = {
+    name: string;
+    email: string;
+    isAuthorized: boolean;
+    isAuthInProgress: boolean;
+}
+
+const initialState: userState = {
+    name: '',
+    email: '',
+    isAuthorized: false,
+    isAuthInProgress: false,
+}
+
 export const updateUser = createAsyncThunk(
     'patch/user',
     updateUserRequest
 )
-export const getUser = createAsyncThunk(
+export const getUser = createAsyncThunk<>(
     'auth/user',
     fetchUserRequest
 )
@@ -27,12 +41,8 @@ export const authUser = createAsyncThunk(
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {
-        name: '',
-        email: '',
-        isAuthorized: false,
-        isAuthInProgress: false,
-    },
+    initialState,
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(registerUser.pending, (state) => {
             console.info("Registering a new user");

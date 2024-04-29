@@ -35,13 +35,4 @@ function IngredientDetails() {
     );
 }
 
-IngredientDetails.propTypes = {
-    image: PropTypes.string,
-    name: PropTypes.string,
-    calories: PropTypes.number,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    onClose: PropTypes.func
-};
 export default IngredientDetails;

@@ -1,17 +1,18 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {orderCheckoutRequest} from "../utils/api";
 
-
 export const orderCheckout = createAsyncThunk(
     'order/checkout',
     orderCheckoutRequest
 )
 
+const initialState: {number: string | null} = {
+    number: null,
+}
+
 const orderDetailsSlice = createSlice({
     name: 'orderDetails',
-    initialState: {
-        number: null
-    },
+    initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(orderCheckout.pending, (state) => {
@@ -21,7 +22,7 @@ const orderDetailsSlice = createSlice({
             state.number = action.payload?.number;
         })
         builder.addCase(orderCheckout.rejected, (state, action) => {
-            state.ingredients = state.initialState;
+            state.number = null;
             state.number = 'Error';
             console.error("Error fetching ingredients\n", action.payload)
         })

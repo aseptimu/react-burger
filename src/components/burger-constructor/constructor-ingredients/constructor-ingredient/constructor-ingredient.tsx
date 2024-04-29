@@ -2,15 +2,19 @@ import React, {useRef} from 'react';
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import constructorStyles from "../../burger-constructor.module.css";
 import {removeIngredient, setBun, setIngredient} from "../../../../services/constructor-slice";
-import {useDispatch, useSelector} from "react-redux";
+import {useAppDispatch, useAppSelector} from "../../../../services";
 import {useDrag, useDrop} from "react-dnd";
 import styles from "../constructor-ingredients.module.css"
 import {CONSTRUCTOR_INGREDIENT, DRAG_ELEMENT} from "../../../../utils/constants";
 
+type TConstructorIngredient = {
+
+};
+
 function ConstructorIngredient({element, index, handleMoveIngredient}) {
-    const dispatch = useDispatch();
-    const ingredients = useSelector(state => state.ingredients.ingredients);
-    const ref = useRef(null)
+    const dispatch = useAppDispatch
+    const ingredients = useAppSelector(state => state.ingredients.ingredients);
+    const ref = useRef<HTMLDivElement>(null)
     const [, drop] = useDrop({
         accept: [CONSTRUCTOR_INGREDIENT, DRAG_ELEMENT],
         drop(item, monitor) {
