@@ -2,7 +2,6 @@ import React, {useRef} from 'react';
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import constructorStyles from "../../burger-constructor.module.css";
 import {removeIngredient, setBun, setIngredient} from "../../../../services/constructor-slice";
-import {decrementIngredientCounter, incrementIngredientCounter} from "../../../../services/ingredients-slice";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
 import styles from "../constructor-ingredients.module.css"
@@ -11,7 +10,6 @@ import {CONSTRUCTOR_INGREDIENT, DRAG_ELEMENT} from "../../../../utils/constants"
 function ConstructorIngredient({element, index, handleMoveIngredient}) {
     const dispatch = useDispatch();
     const ingredients = useSelector(state => state.ingredients.ingredients);
-    const bun = useSelector(state => state.burgerConstructor.bun)
     const ref = useRef(null)
     const [, drop] = useDrop({
         accept: [CONSTRUCTOR_INGREDIENT, DRAG_ELEMENT],
@@ -31,13 +29,9 @@ function ConstructorIngredient({element, index, handleMoveIngredient}) {
                 const ingredient = ingredients.find(element => element._id === item._id)
                 if (ingredient.type === 'bun') {
                     dispatch(setBun(ingredient))
-                    bun && dispatch(decrementIngredientCounter(bun._id));
-                    bun && dispatch(decrementIngredientCounter(bun._id));
-                    dispatch(incrementIngredientCounter(item._id));
                 } else {
                     dispatch(setIngredient({ingredient, hoverIndex}));
                 }
-                dispatch(incrementIngredientCounter(item._id));
             }
         },
         hover(item, monitor) {
@@ -77,9 +71,8 @@ function ConstructorIngredient({element, index, handleMoveIngredient}) {
         }),
     })
     drag(drop(ref));
-    function close(id, nanoid) {
+    function close(nanoid) {
         dispatch(removeIngredient(nanoid))
-        dispatch(decrementIngredientCounter(id));
     }
 
     return (
@@ -90,9 +83,9 @@ function ConstructorIngredient({element, index, handleMoveIngredient}) {
                     <ConstructorElement
                         text={element.name}
                         price={element.price}
-                        thumbnail={element.image_mobile}
+                        thumbnail={element?.image_mobile}
                         extraClass={constructorStyles.element}
-                        handleClose={() => close(element._id, element.nanoid)}
+                        handleClose={() => close(element.nanoid)}
                     />
                 </>
             ) : (

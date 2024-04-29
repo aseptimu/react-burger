@@ -8,7 +8,7 @@ function ConstructorIngredients({ingredients}) {
     const dispatch = useDispatch()
     const handleMoveIngredient = useCallback((dragIndex, hoverIndex) => {
         dispatch(moveIngredient({dragIndex, hoverIndex}));
-    }, [])
+    }, [dispatch])
     return (
         ingredients?.length ? (
                 ingredients.map((element, index) => (

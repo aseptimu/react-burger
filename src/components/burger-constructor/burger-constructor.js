@@ -7,14 +7,18 @@ import Modal from "../modal/modal";
 import {useDispatch, useSelector} from "react-redux";
 import ConstructorBun from "./constructor-bun/constructor-bun";
 import ConstructorIngredients from "./constructor-ingredients/constructor-ingredients";
-import {checkoutRequest} from "../../services/order-details-slice";
+import {orderCheckout} from "../../services/order-details-slice";
 import {clearConstructor} from "../../services/constructor-slice";
-import {dropIngredientsCounter} from "../../services/ingredients-slice";
+import {useNavigate} from "react-router-dom";
 
 function BurgerConstructor() {
     const ingredients = useSelector(state => state.ingredients.ingredients)
     const constructor = useSelector(state => state.burgerConstructor);
     const dispatch =  useDispatch();
+
+    const isAuthorized = useSelector(store => store.user.isAuthorized);
+
+    const navigate = useNavigate();
 
     const [activeModal, setActiveModal] = useState(false);
 
@@ -23,15 +27,18 @@ function BurgerConstructor() {
         constructor.ingredients?.reduce((acc, curr) => acc + curr.price, 0) + (constructor.bun ? constructor.bun.price * 2 : 0)
     ), [constructor.bun, constructor.ingredients])
 
-    function orderCheckout() {
-        dispatch(checkoutRequest(ingredients?.map((element) => element._id)))
-            .then(response => {
-                if (response.payload.number) {
-                    dispatch(clearConstructor())
-                    dispatch(dropIngredientsCounter());
-                }
-            })
-        setActiveModal(true);
+    function onOrderCheckout() {
+        if (!isAuthorized) {
+            navigate('/login');
+        } else {
+            dispatch(orderCheckout(ingredients?.map((element) => element._id)))
+                .then(response => {
+                    if (response.payload.number) {
+                        dispatch(clearConstructor())
+                    }
+                })
+            setActiveModal(true);
+        }
     }
 
     function closeModal() {
@@ -50,7 +57,7 @@ function BurgerConstructor() {
                     <p className={`${styles.amount}`}>{total || 0}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button disabled={!constructor.bun} htmlType="button" type="primary" size="medium" onClick={orderCheckout}>
+                <Button disabled={!constructor.bun} htmlType="button" type="primary" size="medium" onClick={onOrderCheckout}>
                     Оформить заказ
                 </Button>
             </div>

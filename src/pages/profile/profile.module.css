@@ -1,0 +1,41 @@
+.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    grid-gap: 60px;
+    max-width: 1280px;
+    margin: 120px auto 0;
+}
+
+.navigation {
+    composes: text text_type_main-medium from global;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.navigation_list {
+    composes: mb-20 from global;
+}
+
+.navigation_list_item {
+    display: block;
+    height: 64px;
+    line-height: 64px;
+}
+
+.navigation_item_inactive {
+    composes: text_color_inactive from global;
+}
+
+.description {
+    composes: text text_type_main-default text_color_inactive from global;
+    max-width: 320px;
+}
+
+.personal_data {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 24px;
+}

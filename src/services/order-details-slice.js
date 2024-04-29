@@ -1,22 +1,10 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {request} from "../utils/network-operations";
-import {BASE_URL} from "../utils/constants";
+import {orderCheckoutRequest} from "../utils/api";
 
 
-export const checkoutRequest = createAsyncThunk(
+export const orderCheckout = createAsyncThunk(
     'order/checkout',
-    async (order) => {
-        const response = await request(`${BASE_URL}/orders`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                ingredients: order
-            })
-        })
-        return response.order;
-    }
+    orderCheckoutRequest
 )
 
 const orderDetailsSlice = createSlice({
@@ -26,13 +14,13 @@ const orderDetailsSlice = createSlice({
     },
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(checkoutRequest.pending, (state) => {
+        builder.addCase(orderCheckout.pending, (state) => {
             state.number = null;
         })
-        builder.addCase(checkoutRequest.fulfilled, (state, action) => {
+        builder.addCase(orderCheckout.fulfilled, (state, action) => {
             state.number = action.payload?.number;
         })
-        builder.addCase(checkoutRequest.rejected, (state, action) => {
+        builder.addCase(orderCheckout.rejected, (state, action) => {
             state.ingredients = state.initialState;
             state.number = 'Error';
             console.error("Error fetching ingredients\n", action.payload)
