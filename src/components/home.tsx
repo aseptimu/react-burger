@@ -1,6 +1,4 @@
-import React, {useEffect} from 'react';
-import {useDispatch} from "react-redux";
-import {fetchIngredients} from "../services/ingredients-slice";
+import React from 'react';
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import BurgerIngredients from "./burger-ingredients/burger-ingredients";

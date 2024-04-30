@@ -11,7 +11,7 @@ type TDragAndDropIngredient = {
     hoverIndex: number;
 }
 
-const initialState: TIngredients & {bun: null | string} = {
+const initialState: TIngredients & {bun: TIngredient | null } = {
     bun: null,
     ingredients: [],
 };
@@ -20,7 +20,7 @@ const constructorSlice = createSlice({
     name: 'constructor',
     initialState,
     reducers: {
-        setBun: (state, action: PayloadAction<string>) => {
+        setBun: (state, action: PayloadAction<TIngredient>) => {
             state.bun = action.payload;
         },
         moveIngredient: (state, action: PayloadAction<TDragAndDropIndexes>) => {

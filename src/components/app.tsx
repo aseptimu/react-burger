@@ -6,7 +6,6 @@ import Register from "../pages/registration/registration/register";
 import ForgotPassword from "../pages/registration/forgot-password/forgot-password";
 import ResetPassword from "../pages/registration/reset-password/reset-password";
 import Profile from "../pages/profile/profile";
-import {useDispatch} from "react-redux";
 import React, {useEffect} from "react";
 import IngredientDetails from "./burger-ingredients/ingredient-details/ingredient-details";
 import AppHeader from "./app-header/app-header";
@@ -14,9 +13,10 @@ import {fetchIngredients} from "../services/ingredients-slice";
 import Modal from "./modal/modal";
 import {AuthorizedRoute, UnauthorizedRoute} from "./protected-route";
 import {getUser} from "../services/user-slice";
+import {useAppDispatch} from "../services";
 
 function App() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const location = useLocation();
     const navigate = useNavigate();
     const background = location.state && location.state.background;

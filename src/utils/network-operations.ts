@@ -7,7 +7,7 @@
  * @returns {Promise<Object>} Промис, разрешающийся в данные ответа в формате JSON после их успешной проверки.
  * @throws {Error} Исключение, если ответ от сервера содержит ошибку, с информацией о статусе и тексте ошибки.
  */
-export function request(url, options) {
+export function request(url: string, options: RequestInit) {
     return fetch(url, options).then(checkResponse)
 }
 
@@ -20,7 +20,7 @@ export function request(url, options) {
  * @throws {Error} Исключение с текстом ошибки, если ответ от сервера содержит ошибку.
  * @example
  */
-function checkResponse(response) {
+function checkResponse(response: Response) {
     if (!response.ok) {
         throw new Error(`Ошибка ${response.status}: ${response.statusText}`);
     }

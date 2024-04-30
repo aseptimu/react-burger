@@ -1,25 +1,33 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {fetchUserRequest, loginRequest, logoutRequest, registerRequest, updateUserRequest} from "../utils/api";
 
-type userState = {
+type TUserState = {
     name: string;
     email: string;
     isAuthorized: boolean;
     isAuthInProgress: boolean;
 }
 
-const initialState: userState = {
+const initialState: TUserState = {
     name: '',
     email: '',
     isAuthorized: false,
     isAuthInProgress: false,
 }
 
+type TUserData = {
+    'success': boolean;
+    'user': {
+        'email': string;
+        'name': string;
+    }
+}
+
 export const updateUser = createAsyncThunk(
     'patch/user',
     updateUserRequest
 )
-export const getUser = createAsyncThunk<>(
+export const getUser = createAsyncThunk<TUserData>(
     'auth/user',
     fetchUserRequest
 )

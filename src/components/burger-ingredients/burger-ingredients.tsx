@@ -3,10 +3,12 @@ import styles from './burger-ingredient.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsGroup from "./ingredients-group/ingredients-group"
 import {useSelector} from "react-redux";
+import {useAppSelector} from "../../services";
+import {TIngredient} from "../../utils/types";
 
 function BurgerIngredients() {
-    const {ingredients} = useSelector(store => store.ingredients);
-    const burgerConstructor = useSelector(store => store.burgerConstructor);
+    const {ingredients} = useAppSelector(store => store.ingredients);
+    const burgerConstructor = useAppSelector(store => store.burgerConstructor);
     const [currentTab, setActiveTab] = useState('bun');
     const containerRef = useRef(null);
     const ingredientRefs = {
@@ -17,8 +19,8 @@ function BurgerIngredients() {
 
     const ingredientsCounter = useMemo(() => {
         const {bun, ingredients} = burgerConstructor;
-        const counters = {};
-        ingredients.forEach((ingredient) => {
+        const counters: {[key: string]: number} = {};
+        ingredients.forEach((ingredient: TIngredient) => {
             if (!counters[ingredient._id]) counters[ingredient._id] = 0;
             counters[ingredient._id]++;
         })

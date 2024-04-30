@@ -1,10 +1,15 @@
-import React from 'react';
-import {useSelector} from "react-redux";
+import React, {FC, ReactElement} from 'react';
 import {Navigate, useLocation} from "react-router-dom";
 import Loader from "./loader/loader";
+import {useAppSelector} from "../services";
 
-function ProtectedRoute({forAuthorized = false, children}) {
-    const {isAuthorized, isAuthInProgress} = useSelector(store => store.user);
+type TProtectedData = {
+    forAuthorized?: boolean;
+    children: React.ReactNode;
+}
+
+export const ProtectedRoute: FC<TProtectedData> = ({forAuthorized = false, children}): ReactElement | null => {
+    const {isAuthorized, isAuthInProgress} = useAppSelector(store => store.user);
     const location = useLocation();
 
     if (isAuthInProgress) {
@@ -20,11 +25,11 @@ function ProtectedRoute({forAuthorized = false, children}) {
         return <Navigate to={'/login'} state={{from: location}}/>;
     }
 
-    return children;
+    return <>children</>;
 }
 
 export const UnauthorizedRoute = ProtectedRoute;
-export const AuthorizedRoute = ({ children }) => {
+export const AuthorizedRoute: FC<TProtectedData> = ({ children }) => {
     return (
         <ProtectedRoute forAuthorized={true} >
             {children}
