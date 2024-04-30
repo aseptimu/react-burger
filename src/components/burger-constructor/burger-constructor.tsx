@@ -4,19 +4,19 @@ import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-comp
 import styles from './burger-constructor.module.css';
 import OrderDetails from "./order-details/order-details";
 import Modal from "../modal/modal";
-import {useDispatch, useSelector} from "react-redux";
 import ConstructorBun from "./constructor-bun/constructor-bun";
 import ConstructorIngredients from "./constructor-ingredients/constructor-ingredients";
 import {orderCheckout} from "../../services/order-details-slice";
 import {clearConstructor} from "../../services/constructor-slice";
 import {useNavigate} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../services";
 
 function BurgerConstructor() {
-    const ingredients = useSelector(state => state.ingredients.ingredients)
-    const constructor = useSelector(state => state.burgerConstructor);
-    const dispatch =  useDispatch();
+    const ingredients = useAppSelector(state => state.ingredients.ingredients)
+    const constructor = useAppSelector(state => state.burgerConstructor);
+    const dispatch =  useAppDispatch();
 
-    const isAuthorized = useSelector(store => store.user.isAuthorized);
+    const isAuthorized = useAppSelector(store => store.user.isAuthorized);
 
     const navigate = useNavigate();
 

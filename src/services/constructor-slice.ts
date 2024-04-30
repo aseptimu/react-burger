@@ -8,7 +8,7 @@ type TDragAndDropIndexes = {
 
 type TDragAndDropIngredient = {
     ingredient: TIngredient;
-    hoverIndex: number;
+    hoverIndex?: number;
 }
 
 const initialState: TIngredients & {bun: TIngredient | null } = {
@@ -31,9 +31,9 @@ const constructorSlice = createSlice({
         },
         setIngredient: (state, action: PayloadAction<TDragAndDropIngredient>) => {
             const {ingredient, hoverIndex} = action.payload;
-            state.ingredients.splice(hoverIndex, 0, {...ingredient, nanoid: nanoid()});
+            state.ingredients.splice(hoverIndex ? hoverIndex : 0, 0, {...ingredient, nanoid: nanoid()});
         },
-        removeIngredient: (state, action: PayloadAction<string>) => {
+        removeIngredient: (state, action: PayloadAction<string | undefined>) => {
             state.ingredients = state.ingredients.filter((element) => element.nanoid !== action.payload);
         },
         clearConstructor: (state) => {

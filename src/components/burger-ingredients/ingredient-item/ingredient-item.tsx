@@ -2,11 +2,19 @@ import styles from './ingredient-item.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDrag} from "react-dnd";
 import {DRAG_ELEMENT} from "../../../utils/constants";
-import {ingredientPropTypes} from "../../../utils/prop-types";
-import PropTypes from "prop-types";
 import {Link, useLocation} from "react-router-dom";
+import {FC} from "react";
+import {Counters} from "../ingredients-group/ingredients-group";
 
-function IngredientItem({counters, ...props}) {
+type TIngredient = {
+    image: string;
+    name: string;
+    _id: string;
+    price: number;
+    counters: Counters;
+}
+
+export const IngredientItem: FC<TIngredient> = ({counters, ...props}) => {
     const {image, name, _id, price } = props;
     const [{isDrag}, dragRef] = useDrag({
         type: DRAG_ELEMENT,
@@ -35,12 +43,6 @@ function IngredientItem({counters, ...props}) {
                 <p className={`${styles.description}`}>{name}</p>
             </div>
         </Link>
-
     )
 }
-
-IngredientItem.propTypes = {
-    props: ingredientPropTypes,
-    counters: PropTypes.object.isRequired
-};
 export default IngredientItem;

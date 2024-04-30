@@ -1,11 +1,20 @@
 import styles from "./ingredients-group.module.css";
 import React, {forwardRef} from "react";
 import IngredientItem from "../ingredient-item/ingredient-item";
-import PropTypes from "prop-types";
-import ingredientsPropTypes from "../../../utils/prop-types";
+import {TIngredient} from "../../../utils/types";
 
+export type Counters = {
+    [key: string]: number;
+};
 
-const IngredientsGroup = forwardRef(({allIngredients, type, name, counters}, ref) => {
+type TIngredientGroup = {
+    allIngredients: Array<TIngredient>;
+    type: string;
+    typeName: string;
+    counters: Counters;
+}
+
+const IngredientsGroup = forwardRef<HTMLHeadingElement, TIngredientGroup>(({allIngredients, type, typeName, counters}, ref) => {
     const ingredients = allIngredients?.filter(element => element.type === type).map(element => {
         return (
             <li key={element._id} className={styles.card} draggable={true}>
@@ -16,19 +25,12 @@ const IngredientsGroup = forwardRef(({allIngredients, type, name, counters}, ref
 
     return (
         <>
-            <h2 className='mt-10' ref={ref}>{name}</h2>
+            <h2 className='mt-10' ref={ref}>{typeName}</h2>
             <ul className={styles.cards_list}>
                 {ingredients ? ingredients : (<p>Ингредиенты отсутствуют</p>)}
             </ul>
         </>
     );
 });
-
-IngredientsGroup.propTypes = {
-    allIngredients: ingredientsPropTypes,
-    type: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    counters: PropTypes.object.isRequired
-};
 
 export default IngredientsGroup;

@@ -1,48 +1,91 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {fetchUserRequest, loginRequest, logoutRequest, registerRequest, updateUserRequest} from "../utils/api";
 
-type TUserState = {
+export type TUserState = {
     name: string;
     email: string;
     isAuthorized: boolean;
     isAuthInProgress: boolean;
+};
+
+export type TUserAuth = {
+    "success": boolean;
+    "user": {
+        "email": string;
+        "name": string;
+    }
 }
+
+export type TUserAuthData = {
+    name: string;
+    email: string;
+    password: string;
+}
+
+export type TLogout = {
+    "success": boolean;
+    "message": string;
+}
+
+export type TRegister = {
+    "email"?: string;
+    "password"?: string;
+    "name"?: string;
+}
+
+export type TRegisterData = {
+    "success": boolean;
+    "user": {
+        "email": string;
+        "name": string;
+    },
+    "accessToken": string;
+    "refreshToken": string;
+}
+
+export type TAuth = {
+    "email"?: string;
+    "password"?: string;
+};
+
+export type TAuthData = {
+    "success": boolean;
+    "accessToken": string;
+    "refreshToken": string;
+    "user": {
+        "email": string;
+        "name": string;
+    }
+};
 
 const initialState: TUserState = {
     name: '',
     email: '',
     isAuthorized: false,
     isAuthInProgress: false,
-}
+};
 
-type TUserData = {
-    'success': boolean;
-    'user': {
-        'email': string;
-        'name': string;
-    }
-}
 
-export const updateUser = createAsyncThunk(
+export const updateUser = createAsyncThunk<TUserAuth, TUserAuthData>(
     'patch/user',
     updateUserRequest
 )
-export const getUser = createAsyncThunk<TUserData>(
+export const getUser = createAsyncThunk<TUserAuth>(
     'auth/user',
     fetchUserRequest
 )
 
-export const userLogout = createAsyncThunk(
+export const userLogout = createAsyncThunk<TLogout, string>(
     'user/logout',
     logoutRequest
 )
 
-export const registerUser = createAsyncThunk(
+export const registerUser = createAsyncThunk<TRegisterData, TRegister>(
     'user/register',
     registerRequest
 );
 
-export const authUser = createAsyncThunk(
+export const authUser = createAsyncThunk<TAuthData, TAuth>(
     'user/login',
     loginRequest
 )

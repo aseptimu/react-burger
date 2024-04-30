@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./constructor-bun.module.css";
 import constructorStyles from "../burger-constructor.module.css";
+import {TIngredient} from "../../../utils/types";
 
-function ConstructorBun({bun, type}) {
+type TBun = {
+    bun: TIngredient | null;
+    type: 'top' | 'bottom' | undefined;
+}
+const ConstructorBun: FC<TBun> = ({bun, type}) => {
     return (
         bun ? (
             <div className={`${styles.constructor__bun}`}>

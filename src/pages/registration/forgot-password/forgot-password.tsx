@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FormEvent} from 'react';
 import styles from '../registration.module.css'
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
@@ -10,7 +10,7 @@ function ForgotPassword() {
     const {values, handleChange} = useForm({})
     const navigate = useNavigate();
 
-    const resetPassword = (e) => {
+    const resetPassword = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         forgotPasswordRequest(values.email)
             .then((response) => {

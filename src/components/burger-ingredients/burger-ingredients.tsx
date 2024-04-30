@@ -2,19 +2,19 @@ import {useMemo, useRef, useState} from 'react';
 import styles from './burger-ingredient.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsGroup from "./ingredients-group/ingredients-group"
-import {useSelector} from "react-redux";
 import {useAppSelector} from "../../services";
 import {TIngredient} from "../../utils/types";
 
+const INITIAL_TAB = 'bun';
 function BurgerIngredients() {
     const {ingredients} = useAppSelector(store => store.ingredients);
     const burgerConstructor = useAppSelector(store => store.burgerConstructor);
-    const [currentTab, setActiveTab] = useState('bun');
-    const containerRef = useRef(null);
+    const [currentTab, setActiveTab] = useState(INITIAL_TAB);
+    const containerRef = useRef<HTMLElement>(null);
     const ingredientRefs = {
-        bun: useRef(null),
-        sauce: useRef(null),
-        main: useRef(null)
+        bun: useRef<HTMLHeadingElement>(null),
+        sauce: useRef<HTMLHeadingElement>(null),
+        main: useRef<HTMLHeadingElement>(null)
     }
 
     const ingredientsCounter = useMemo(() => {
@@ -29,30 +29,39 @@ function BurgerIngredients() {
     }, [burgerConstructor])
 
 
-    const handleClick = (value) => {
+    const handleClick = (value: "bun" | "sauce" | "main") => {
         setActiveTab(value);
         const ref = ingredientRefs[value];
-        ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (ref.current) {
+            ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
 
     const handleScroll = () => {
         const distances = Object.entries(ingredientRefs).map(([key, ref]) => {
-            const ingredientRect = ref.current.getBoundingClientRect();
-            const containerRect = containerRef.current.getBoundingClientRect();
-            let isInBound = true;
-            let distance = ingredientRect.top - containerRect.top;
-            if (ingredientRect.bottom < containerRect.top) {
-                distance = containerRect.top - ingredientRect.bottom;
-            }
-            if (containerRect.bottom < ingredientRect.top) {
-                isInBound = false;
-            }
+            if (ref.current && containerRef.current) {
+                const ingredientRect = ref.current.getBoundingClientRect();
+                const containerRect = containerRef.current.getBoundingClientRect();
+                let isInBound = true;
+                let distance = ingredientRect.top - containerRect.top;
+                if (ingredientRect.bottom < containerRect.top) {
+                    distance = containerRect.top - ingredientRect.bottom;
+                }
+                if (containerRect.bottom < ingredientRect.top) {
+                    isInBound = false;
+                }
 
-            return {key, distance: Math.abs(distance), isInBound: isInBound}
+                return {key, distance: Math.abs(distance), isInBound: isInBound}
+            }
         })
 
-        const closestHeading = distances.reduce((acc, curr) => curr.distance < acc.distance && curr.isInBound ? curr : acc, distances[0])
-        setActiveTab(closestHeading.key);
+        const closestHeading = distances.reduce((acc, curr) => {
+            if (!curr || !acc) {
+                return;
+            }
+            return curr.distance < acc.distance && curr.isInBound ? curr : acc;
+        }, distances[0]);
+        setActiveTab(closestHeading ? closestHeading.key : INITIAL_TAB);
     }
 
     return (
@@ -70,9 +79,9 @@ function BurgerIngredients() {
                 </Tab>
             </div>
             <section className={styles.ingredients__section} ref={containerRef} onScroll={handleScroll}>
-                <IngredientsGroup allIngredients={ingredients} counters={ingredientsCounter} type={'bun'} name={"Булки"} ref={ingredientRefs.bun}/>
-                <IngredientsGroup allIngredients={ingredients} counters={ingredientsCounter} type={'sauce'} name={"Соусы"} ref={ingredientRefs.sauce}/>
-                <IngredientsGroup allIngredients={ingredients} counters={ingredientsCounter} type={'main'} name={"Начинки"} ref={ingredientRefs.main}/>
+                <IngredientsGroup allIngredients={ingredients} counters={ingredientsCounter} type={'bun'} typeName={"Булки"} ref={ingredientRefs.bun}/>
+                <IngredientsGroup allIngredients={ingredients} counters={ingredientsCounter} type={'sauce'} typeName={"Соусы"} ref={ingredientRefs.sauce}/>
+                <IngredientsGroup allIngredients={ingredients} counters={ingredientsCounter} type={'main'} typeName={"Начинки"} ref={ingredientRefs.main}/>
             </section>
         </section>
     )

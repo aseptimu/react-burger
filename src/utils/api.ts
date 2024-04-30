@@ -1,19 +1,6 @@
 import {request} from "./network-operations";
 import {AUTH, BASE_URL, PASSWORD_RESET} from "./constants";
-
-type TRegisterData = {
-    email: string;
-    password: string;
-    name: string;
-};
-
-type TLoginData = Omit<TRegisterData, 'name'>;
-
-type TRefreshData = {
-    success: boolean;
-    refreshToken: string;
-    accessToken: string;
-}
+import {TAuth, TRegister, TUserAuthData} from "../services/user-slice";
 
 export const fetchIngredientsRequest = async () => {
     const response = await request(BASE_URL + '/ingredients', {});
@@ -33,7 +20,7 @@ export const orderCheckoutRequest = async (order: string[]) => {
     return response.order;
 };
 
-export const forgotPasswordRequest = async (email: string) => {
+export const forgotPasswordRequest = async (email?: string) => {
     return await request(BASE_URL + PASSWORD_RESET, {
         method: 'POST',
         headers: {
@@ -45,7 +32,7 @@ export const forgotPasswordRequest = async (email: string) => {
     });
 };
 
-export const resetPasswordRequest = async (newPassword: string, resetCode: string) => {
+export const resetPasswordRequest = async (newPassword: string | undefined, resetCode: string | undefined) => {
     return await request(BASE_URL + PASSWORD_RESET, {
         method: 'POST',
         headers: {
@@ -58,7 +45,7 @@ export const resetPasswordRequest = async (newPassword: string, resetCode: strin
     });
 };
 
-export const registerRequest = async({email, password, name}: TRegisterData) => {
+export const registerRequest = async({email, password, name}: TRegister) => {
     return await fetchWithRefresh(BASE_URL + AUTH + '/register', {
         method: 'POST',
         headers: {
@@ -78,7 +65,7 @@ export const registerRequest = async({email, password, name}: TRegisterData) => 
  * @param password
  * @returns {Promise<Object>}
  */
-export const loginRequest = async({email, password}: TLoginData) => {
+export const loginRequest = async({email, password}: TAuth) => {
     return await fetchWithRefresh(BASE_URL + AUTH + '/login', {
         method: 'POST',
         headers: {
@@ -130,7 +117,7 @@ export const fetchUserRequest = async () => {
  * Эндпоинт обновления данных о пользователе
  * @returns {Promise<Object>}
  */
-export const updateUserRequest = async({email, password, name}: TRegisterData) => {
+export const updateUserRequest = async({email, password, name}: TUserAuthData) => {
     const accessToken = localStorage.getItem('accessToken');
 
     const headers: Record<string, string> = {
@@ -172,7 +159,7 @@ export const fetchWithRefresh = async (url: string, options: RequestInit) => {
         return await checkReponse(res);
     } catch (err: any) {
         if (err.message === "jwt expired") {
-            const refreshData = await refreshToken() as TRefreshData; //обновляем токен
+            const refreshData = await refreshToken(); //обновляем токен
             if (!refreshData.success) {
                 return Promise.reject(refreshData);
             }

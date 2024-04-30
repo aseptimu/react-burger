@@ -1,51 +1,55 @@
-import React, {useRef, useState} from 'react';
+import React, {FormEvent, useRef, useState} from 'react';
 import styles from '../registration.module.css'
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
 import {HIDE_ICON, SHOW_ICON} from "../../constants";
-import {registerUser} from "../../../services/user-slice";
-import {useDispatch} from "react-redux";
+import {registerUser, TRegisterData} from "../../../services/user-slice";
 import {useForm} from "../../../hooks/hooks";
+import {TICons} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
+import {useAppDispatch} from "../../../services";
 
 
 function Register() {
     const {values, handleChange} = useForm({});
-    const [passwordIcon, setPasswordIcon] = useState(SHOW_ICON);
-    const passwordInputRef = useRef(null);
+    const [passwordIcon, setPasswordIcon] = useState<keyof TICons>(SHOW_ICON);
+    const passwordInputRef = useRef<HTMLInputElement>(null);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const showPassword = () => {
-        const type = passwordInputRef.current.type
-        if (type === 'text') {
+        const type = passwordInputRef?.current?.type
+        if (type === 'text' && passwordInputRef.current) {
             passwordInputRef.current.type = 'password';
             setPasswordIcon(SHOW_ICON);
-        } else {
+        } else if (passwordInputRef.current) {
             passwordInputRef.current.type = 'text';
             setPasswordIcon(HIDE_ICON);
         }
     }
 
-    const onRegister = (e) => {
+    const onRegister = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const userData = {email: values.email, password: values.password, name: values.name};
         dispatch(registerUser(userData)).then((response) => {
-            if (!response.error) {
-                localStorage.setItem('accessToken', response.payload.accessToken);
-                localStorage.setItem('refreshToken', response.payload.refreshToken);
-                navigate('/');
-            }
+            const payload = response.payload as TRegisterData;
+            localStorage.setItem('accessToken', payload.accessToken);
+            localStorage.setItem('refreshToken', payload.refreshToken);
+            navigate('/');
         });
     }
-
 
     return (
         <>
             <main className={styles.main}>
                 <form className={styles.form} onSubmit={onRegister}>
                     <h1 className={styles.title}>Регистрация</h1>
-                    <Input value={values.name || ""} name="name" onChange={handleChange} placeholder="Имя"/>
+                    <Input
+                        value={values.name || ""}
+                        name="name" onChange={handleChange}
+                        placeholder="Имя"
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}                    />
                     <EmailInput value={values.email || ""} name="email" onChange={handleChange} placeholder="E-mail"/>
                     <Input
                         value={values.password || ""}
@@ -56,6 +60,8 @@ function Register() {
                         icon={passwordIcon}
                         onIconClick={showPassword}
                         ref={passwordInputRef}
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
                     />
                     <Button htmlType="submit" type="primary" size="medium">
                         Зарегистрироваться

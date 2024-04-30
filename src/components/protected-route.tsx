@@ -25,7 +25,7 @@ export const ProtectedRoute: FC<TProtectedData> = ({forAuthorized = false, child
         return <Navigate to={'/login'} state={{from: location}}/>;
     }
 
-    return <>children</>;
+    return <>{children}</>;
 }
 
 export const UnauthorizedRoute = ProtectedRoute;
