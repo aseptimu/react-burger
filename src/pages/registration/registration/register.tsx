@@ -48,8 +48,7 @@ function Register() {
                         value={values.name || ""}
                         name="name" onChange={handleChange}
                         placeholder="Имя"
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}                    />
+                    />
                     <EmailInput value={values.email || ""} name="email" onChange={handleChange} placeholder="E-mail"/>
                     <Input
                         value={values.password || ""}
@@ -60,8 +59,6 @@ function Register() {
                         icon={passwordIcon}
                         onIconClick={showPassword}
                         ref={passwordInputRef}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
                     />
                     <Button htmlType="submit" type="primary" size="medium">
                         Зарегистрироваться

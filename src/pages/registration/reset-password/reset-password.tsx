@@ -57,16 +57,12 @@ function ResetPassword() {
                         icon={passwordIcon}
                         onIconClick={showPassword}
                         ref={passwordInputRef}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
                     />
                     <Input
                         value={values.code || ""}
                         name="code"
                         onChange={handleChange}
                         placeholder="Введите код из письма"
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
                     />
                     <Button htmlType="submit" type="primary" size="medium">
                         Сохранить

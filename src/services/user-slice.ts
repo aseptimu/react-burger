@@ -75,7 +75,7 @@ export const getUser = createAsyncThunk<TUserAuth>(
     fetchUserRequest
 )
 
-export const userLogout = createAsyncThunk<TLogout, string>(
+export const userLogout = createAsyncThunk<TLogout, string | null>(
     'user/logout',
     logoutRequest
 )

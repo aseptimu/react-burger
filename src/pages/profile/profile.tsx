@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import styles from './profile.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {NavLink} from "react-router-dom";
 import {EDIT_ICON} from "../constants";
-import {useDispatch, useSelector} from "react-redux";
 import {updateUser, userLogout} from "../../services/user-slice";
+import {useAppDispatch, useAppSelector} from "../../services";
 
 function Profile() {
-    const user = useSelector(store => store.user);
+    const user = useAppSelector(store => store.user);
 
     const [name, setName] = useState(user.name);
     const [email, setEmail] = useState(user.email);
@@ -15,16 +15,16 @@ function Profile() {
 
     const [isEdited, setIsEdited] = useState(false);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const isEditedFields = user.name !== name || user.email !== email || password !== '';
         setIsEdited(isEditedFields);
     }, [name, email, password, user.name, user.email]);
 
-    const onNameChange = (e) => setName(e.target.value);
-    const onEmailChange = (e) => setEmail(e.target.value);
-    const onPasswordChange = (e) => setPassword(e.target.value);
+    const onNameChange = (e: ChangeEvent<HTMLInputElement>) => setName(e.target.value);
+    const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+    const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
 
     const setDefaultState = () => {
         setName(user.name);
@@ -38,11 +38,9 @@ function Profile() {
 
     const handleLogout = () => {
         const token = localStorage.getItem('refreshToken')
-        dispatch(userLogout(token)).then((response) => {
-            if (!response.error) {
+        dispatch(userLogout(token)).then(() => {
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
-            }
         });
     }
 

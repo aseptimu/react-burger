@@ -62,8 +62,7 @@ function SignIn() {
                         icon={passwordIcon}
                         onIconClick={showPassword}
                         ref={passwordInputRef}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}                    />
+                />
                     <Button htmlType="submit" type="primary" size="medium">
                         Войти
                     </Button>

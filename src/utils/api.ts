@@ -83,7 +83,7 @@ export const loginRequest = async({email, password}: TAuth) => {
  * @param refreshToken
  * @returns {Promise<Object>}
  */
-export const logoutRequest = async(refreshToken: string) => {
+export const logoutRequest = async(refreshToken: string | null) => {
     return await request(BASE_URL + AUTH + '/logout', {
         method: 'POST',
         headers: {
