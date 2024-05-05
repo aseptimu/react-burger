@@ -36,15 +36,16 @@ function SignIn() {
 
         dispatch(authUser(userData)).then((response) => {
             const payload = response.payload as TAuthData;
-
-            localStorage.setItem('accessToken', payload.accessToken);
-            localStorage.setItem('refreshToken', payload.refreshToken);
+            if (payload?.accessToken && payload?.refreshToken) {
+                localStorage.setItem('accessToken', payload.accessToken);
+                localStorage.setItem('refreshToken', payload.refreshToken);
+            }
             if (location.state?.from.pathname === '/profile') {
                 navigate('/profile');
             } else {
                 navigate('/');
             }
-        });
+        }).catch((err) => console.error(err));
     }
 
     return (

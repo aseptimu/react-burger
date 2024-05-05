@@ -1,10 +1,10 @@
 import styles from "./order-details.module.css"
 import logo from "../../../images/done.svg"
-import {useSelector} from "react-redux";
+import {useAppSelector} from "../../../services";
 
 
 function OrderDetails() {
-    const number = useSelector(store => store.orderDetails.number)
+    const number = useAppSelector(store => store.orderDetails.number)
 
     return (
         <>

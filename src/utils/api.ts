@@ -108,7 +108,7 @@ export const fetchUserRequest = async () => {
     if (accessToken) {
         headers['authorization'] = accessToken;
     }
-    return await request(BASE_URL + AUTH + '/user', {
+    return await fetchWithRefresh(BASE_URL + AUTH + '/user', {
         headers
     });
 };

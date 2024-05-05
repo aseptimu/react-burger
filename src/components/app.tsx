@@ -22,7 +22,10 @@ function App() {
     const background = location.state && location.state.background;
 
     useEffect(() => {
-        dispatch(getUser());
+        const token = localStorage.getItem('refreshToken')
+        if (token) {
+            dispatch(getUser());
+        }
     }, [dispatch]);
 
     const handleModalClose = () => {
