@@ -14,6 +14,7 @@ import Modal from "./modal/modal";
 import {AuthorizedRoute, UnauthorizedRoute} from "./protected-route";
 import {getUser} from "../services/user-slice";
 import {useAppDispatch} from "../services";
+import Feed from "../pages/feed/feed";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -47,7 +48,11 @@ function App() {
                 <Route path={"/forgot-password"} element={<UnauthorizedRoute><ForgotPassword/></UnauthorizedRoute>}/>
                 <Route path={"/reset-password"} element={<UnauthorizedRoute><ResetPassword/></UnauthorizedRoute>}/>
                 <Route path={"/profile"} element={<AuthorizedRoute><Profile/></AuthorizedRoute>}/>
+                <Route path={"/profile/orders"} element={<AuthorizedRoute><Profile/></AuthorizedRoute>}/>
+                <Route path={"/profile/orders/:number"} element={<AuthorizedRoute><Profile/></AuthorizedRoute>}/>
                 <Route path={"/logout"} element={<AuthorizedRoute><Profile/></AuthorizedRoute>}/>
+                <Route path={"/feed"} element={<Feed />}/>
+                <Route path={"/feed/:number"} element={<Feed />}/>
                 <Route path={"*"} element={<NotFound404/>}/>
             </Routes>
             {
