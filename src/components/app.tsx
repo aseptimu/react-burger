@@ -14,7 +14,7 @@ import Modal from "./modal/modal";
 import {AuthorizedRoute, UnauthorizedRoute} from "./protected-route";
 import {getUser} from "../services/user-slice";
 import {useAppDispatch} from "../services";
-import Feed from "../pages/feed/feed";
+import Feed from "./feed/feed";
 
 function App() {
     const dispatch = useAppDispatch();
