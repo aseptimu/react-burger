@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './feed-list.module.css';
-import FeedItem, {TFeedItem} from "../feed-item/feed-item";
+import FeedItem, {TFeedItem} from "../../../components/feed/feed-item/feed-item";
 import {Link, useLocation} from "react-router-dom";
+import styles from "../../../components/feed/feed-list/feed-list.module.css";
 
-const FeedList = () => {
+const Orders = () => {
     const location = useLocation();
 
     const today = new Date();
@@ -28,7 +28,8 @@ const FeedList = () => {
                 new URL('https://code.s3.yandex.net/react/code/bun-01.png'),
                 new URL('https://code.s3.yandex.net/react/code/bun-01.png'),
             ],
-            price: 480
+            price: 480,
+            status: 'Выполнен',
         },
         {
             _id: '7',
@@ -56,7 +57,8 @@ const FeedList = () => {
                 new URL('https://code.s3.yandex.net/react/code/bun-01.png'),
 
             ],
-            price: 480
+            price: 480,
+            status: 'Готовится'
         },
         {
             _id: '6',
@@ -174,8 +176,8 @@ const FeedList = () => {
         return (
             <Link
                 key={element._id}
-                  to={`/feed/${element._id}`}
-                state={{ background: location}}
+                to={`/profile/orders/${element._id}`}
+                state={{background: location}}
             >
                 <li key={element._id}>
                     <FeedItem {...element} />
@@ -191,4 +193,4 @@ const FeedList = () => {
     );
 };
 
-export default FeedList;
+export default Orders;
