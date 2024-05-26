@@ -16,6 +16,7 @@ import {getUser} from "../services/user-slice";
 import {useAppDispatch} from "../services";
 import Feed from "./feed/feed";
 import FeedView from "./feed/feed-view/feed-view";
+import {WS_CONNECTION_START} from "../services/middleware/actions";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -36,6 +37,7 @@ function App() {
 
     useEffect(() => {
         dispatch(fetchIngredients());
+        dispatch({type: WS_CONNECTION_START});
     }, [dispatch]);
 
     return (
@@ -49,11 +51,13 @@ function App() {
                 <Route path={"/forgot-password"} element={<UnauthorizedRoute><ForgotPassword/></UnauthorizedRoute>}/>
                 <Route path={"/reset-password"} element={<UnauthorizedRoute><ResetPassword/></UnauthorizedRoute>}/>
                 <Route path={"/profile"} element={<AuthorizedRoute><PersonalAccount/></AuthorizedRoute>}/>
-                <Route path={"/profile/orders"} element={<AuthorizedRoute><PersonalAccount isOrder={true}/></AuthorizedRoute>}/>
-                <Route path={"/profile/orders/:number"} element={<AuthorizedRoute><PersonalAccount/></AuthorizedRoute>}/>
+                <Route path={"/profile/orders"}
+                       element={<AuthorizedRoute><PersonalAccount isOrder={true}/></AuthorizedRoute>}/>
+                <Route path={"/profile/orders/:number"}
+                       element={<AuthorizedRoute><FeedView/></AuthorizedRoute>}/>
                 <Route path={"/logout"} element={<AuthorizedRoute><PersonalAccount/></AuthorizedRoute>}/>
-                <Route path={"/feed"} element={<Feed />}/>
-                <Route path={"/feed/:number"} element={<FeedView />}/>
+                <Route path={"/feed"} element={<Feed/>}/>
+                <Route path={"/feed/:number"} element={<FeedView/>}/>
                 <Route path={"*"} element={<NotFound404/>}/>
             </Routes>
             {
@@ -63,25 +67,25 @@ function App() {
                             path={`/ingredients/:id`}
                             element={
                                 <Modal text={"Детали ингредиента"} onClose={handleModalClose}>
-                                    <IngredientDetails />
+                                    <IngredientDetails/>
                                 </Modal>
                             }
                         />
                         <Route path={"/feed/:number"}
-                                element={
-                                    <Modal onClose={handleModalClose}>
-                                        <FeedView />
-                                    </Modal>
-                                }
+                               element={
+                                   <Modal onClose={handleModalClose}>
+                                       <FeedView/>
+                                   </Modal>
+                               }
                         />
                         <Route path={"/profile/orders/:number"}
-                                element={
-                                    <AuthorizedRoute>
-                                    <Modal onClose={handleModalClose}>
-                                        <FeedView />
-                                    </Modal>
-                                    </AuthorizedRoute>
-                                }
+                               element={
+                                   <AuthorizedRoute>
+                                       <Modal onClose={handleModalClose}>
+                                           <FeedView/>
+                                       </Modal>
+                                   </AuthorizedRoute>
+                               }
                         />
                     </Routes>
                 )

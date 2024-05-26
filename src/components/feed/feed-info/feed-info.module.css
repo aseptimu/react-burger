@@ -31,6 +31,12 @@
     composes: text text_type_main-medium from global;
 }
 
+.orders_number_wrapper {
+    display: flex;
+    max-width: 100%;
+    gap: 5px;
+}
+
 .orders_number {
     composes: text text text_type_digits-default from global;
     color: #00CCCC;

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from "./feed-item-image.module.css";
 
 type TFeedItemImage = {
-    readonly src: string;
+    readonly src?: string;
     readonly isLastItem: boolean;
     readonly removedItemsCount?: number;
 }
