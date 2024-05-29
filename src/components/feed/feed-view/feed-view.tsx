@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from "./feed-view.module.css";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import FeedItemImage from "../feed-item/feed-item-image/feed-item-image";
@@ -6,19 +6,24 @@ import {useParams} from "react-router-dom";
 import {useAppSelector} from "../../../services";
 import {TIngredient} from "../../../utils/types";
 import {fetchIngredientRequest} from "../../../utils/api";
+import {TOrders} from "../../../services/feed-slice";
 
 const FeedView = () => {
+    const [order, setOrder] = useState<TOrders | undefined | null>(null)
     const {number} = useParams();
     const {ingredients: allIngredients} = useAppSelector(store => store.ingredients);
-    const {orders} = useAppSelector(store => store.feed);
+    const {orders: allOrders} = useAppSelector(store => store.feed);
 
-    let order = orders?.find((order) => order._id === number);
 
-    if (order === undefined) {
-        fetchIngredientRequest(number).then((element) => {
-            order = element;
-        })
-    }
+    useEffect(() => {
+        setOrder(allOrders?.find((order) => order._id === number));
+        console.log()
+        if (order === undefined) {
+            fetchIngredientRequest(number).then((element) => {
+                setOrder(element[0]);
+            })
+        }
+    }, []);
 
     const orderIngredients = order?.ingredients.map((id) => (
         allIngredients?.find((ingredient) => ingredient._id === id)

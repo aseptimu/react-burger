@@ -9,7 +9,7 @@ export const fetchIngredientsRequest = async () => {
 
 export const fetchIngredientRequest = async (ingredientId?: string) => {
     const response = await request(BASE_URL + '/orders/' + ingredientId, {});
-    return response.data;
+    return response.orders;
 }
 
 export const orderCheckoutRequest = async (order: string[]) => {
