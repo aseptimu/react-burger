@@ -15,9 +15,6 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                 socket = new WebSocket(wsUrl);
             }
             if (socket) {
-                socket.onopen = event => (console.info(event));
-                socket.onerror = event => (console.info(event));
-                socket.onclose = event => (console.info(event));
                 socket.onmessage = event => {
                     dispatch(setFeed(event.data))
                 };

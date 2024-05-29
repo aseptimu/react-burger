@@ -7,6 +7,11 @@ export const fetchIngredientsRequest = async () => {
     return response.data;
 };
 
+export const fetchIngredientRequest = async (ingredientId?: string) => {
+    const response = await request(BASE_URL + '/orders/' + ingredientId, {});
+    return response.data;
+}
+
 export const orderCheckoutRequest = async (order: string[]) => {
     const response = await fetchWithRefresh(`${BASE_URL}/orders`, {
         method: 'POST',

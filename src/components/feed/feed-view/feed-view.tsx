@@ -4,13 +4,21 @@ import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-
 import FeedItemImage from "../feed-item/feed-item-image/feed-item-image";
 import {useParams} from "react-router-dom";
 import {useAppSelector} from "../../../services";
+import {TIngredient} from "../../../utils/types";
+import {fetchIngredientRequest} from "../../../utils/api";
 
 const FeedView = () => {
     const {number} = useParams();
     const {ingredients: allIngredients} = useAppSelector(store => store.ingredients);
     const {orders} = useAppSelector(store => store.feed);
 
-    const order = orders?.find((order) => order._id === number);
+    let order = orders?.find((order) => order._id === number);
+
+    if (order === undefined) {
+        fetchIngredientRequest(number).then((element) => {
+            order = element;
+        })
+    }
 
     const orderIngredients = order?.ingredients.map((id) => (
         allIngredients?.find((ingredient) => ingredient._id === id)
@@ -29,13 +37,25 @@ const FeedView = () => {
         case 'pending'://TODO:
             statusDisplayableName = 'Готовится'
     }
-//TODO: price
-    const ingredients = orderIngredients?.map((ingredient) => (
+
+    const reducedIngredients = orderIngredients?.reduce((acc, curr) => {
+        const key = curr!._id
+        if (!(key in acc)) {
+            acc[key] = {...curr!, counter: 0};
+        }
+        acc[key].counter += 1;
+        return acc;
+    }, {} as Record<string, TIngredient & {counter: number}>)
+
+
+    const ingredients = reducedIngredients && Object.values(reducedIngredients).map((ingredient) => (
         <li className={styles.list_item}>
-            <FeedItemImage src={ingredient?.image} isLastItem={false} />
-            <p className={styles.ingredient_title}>{ingredient?.name}</p>
+            <div className={styles.ingredient_info}>
+                <FeedItemImage src={ingredient?.image} isLastItem={false} />
+                <p className={styles.ingredient_title}>{ingredient?.name}</p>
+            </div>
             <div className={styles.price}>
-                <p className={styles.order__price}>{ingredient?.price}2 x 20</p>
+                <p className={styles.order__price}>{`${ingredient.counter} x ${ingredient.price}`}</p>
                 <CurrencyIcon type="primary"/>
             </div>
         </li>
@@ -52,7 +72,7 @@ const FeedView = () => {
                 {ingredients}
             </ul>
             <div className={styles.summary}>
-                <FormattedDate className={styles.order__time} date={new Date(order!.updatedAt)}/>
+                <FormattedDate className={styles.order__time} date={new Date(order ? order.updatedAt : '')}/>
                 <div className={styles.price}>
                     <p className={styles.order__price}>{price}</p>
                     <CurrencyIcon type="primary"/>
