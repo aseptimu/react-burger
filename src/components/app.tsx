@@ -16,7 +16,6 @@ import {getUser} from "../services/user-slice";
 import {useAppDispatch} from "../services";
 import Feed from "./feed/feed";
 import FeedView from "./feed/feed-view/feed-view";
-import {WS_CONNECTION_START} from "../services/middleware/actions";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -37,7 +36,7 @@ function App() {
 
     useEffect(() => {
         dispatch(fetchIngredients());
-        dispatch({type: WS_CONNECTION_START});
+        // dispatch({type: WS_CONNECTION_START, payload: WEBSOCKET_URL});
     }, [dispatch]);
 
     return (

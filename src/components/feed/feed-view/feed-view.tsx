@@ -16,12 +16,13 @@ const FeedView = () => {
 
 
     useEffect(() => {
-        setOrder(allOrders?.find((order) => order._id === number));
-        console.log()
-        if (order === undefined) {
+        const foundOrder = allOrders?.find((order) => order._id === number);
+        if (foundOrder === undefined) {
             fetchIngredientRequest(number).then((element) => {
                 setOrder(element[0]);
             })
+        } else {
+            setOrder(foundOrder);
         }
     }, []);
 
@@ -36,10 +37,10 @@ const FeedView = () => {
         case 'done':
             statusDisplayableName = 'Выполнен'
             break;
-        case 'cancel'://TODO:
-            statusDisplayableName = 'Отменён'
+        case 'created':
+            statusDisplayableName = 'Создан'
             break;
-        case 'pending'://TODO:
+        case 'pending':
             statusDisplayableName = 'Готовится'
     }
 
@@ -54,7 +55,7 @@ const FeedView = () => {
 
 
     const ingredients = reducedIngredients && Object.values(reducedIngredients).map((ingredient) => (
-        <li className={styles.list_item}>
+        <li key={ingredient._id} className={styles.list_item}>
             <div className={styles.ingredient_info}>
                 <FeedItemImage src={ingredient?.image} isLastItem={false} />
                 <p className={styles.ingredient_title}>{ingredient?.name}</p>

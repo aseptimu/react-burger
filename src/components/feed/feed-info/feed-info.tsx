@@ -17,15 +17,15 @@ const FeedInfo = () => {
     const done = feed?.orders?.filter((ingredient) => ingredient.status === 'done');
     const pending = feed?.orders?.filter((ingredient) => ingredient.status === 'pending');
 
-    const doneList = done && chunkArray(done).map((group, i) => (
+    const doneList = done && chunkArray(done).map((group) => (
         <ul className={styles.orders_number}>
             {group.map(item => (
-                <li>{item.number}</li>
+                <li key={item._id}>{item.number}</li>
             ))}
         </ul>
     ))
 
-    const pendingList = pending && chunkArray(pending).map((group, i) => (
+    const pendingList = pending && chunkArray(pending).map((group) => (
         <ul className={styles.orders_number}>
             {group.map(item => (
                 <li>{item.number}</li>

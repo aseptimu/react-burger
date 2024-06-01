@@ -12,7 +12,6 @@ import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../services";
 
 function BurgerConstructor() {
-    const ingredients = useAppSelector(state => state.ingredients.ingredients)
     const constructor = useAppSelector(state => state.burgerConstructor);
     const dispatch =  useAppDispatch();
 
@@ -31,7 +30,11 @@ function BurgerConstructor() {
         if (!isAuthorized) {
             navigate('/login');
         } else {
-            dispatch(orderCheckout(ingredients?.map((element) => element._id)))
+            const bunId = constructor.bun?._id;
+            const ingredientIds = constructor?.ingredients.map((element) => element._id) || [];
+
+            const completeIngredientIds = bunId ? ingredientIds.concat(bunId, bunId) : ingredientIds;
+            dispatch(orderCheckout(completeIngredientIds))
                 .then(response => {
                     if (response.payload.number) {
                         dispatch(clearConstructor())

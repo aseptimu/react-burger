@@ -1,28 +1,37 @@
 import {Middleware, MiddlewareAPI} from "@reduxjs/toolkit";
 import {AppDispatch, RootState} from "../index";
 import {TWSActions} from "./types";
-import {WS_CONNECTION_START} from "./actions";
 import {setFeed} from "../feed-slice";
 
-export const socketMiddleware = (wsUrl: string): Middleware => {
-    return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
-        let socket: WebSocket | null = null;
-        return next => (action: TWSActions) => {
-            const {type} = action;
+export const socketMiddleware = (actions: TWSActions): Middleware => {
+    let socket: WebSocket | null = null;
+
+    return (store: MiddlewareAPI<AppDispatch, RootState>) => {
+        return next => action => {
             const {dispatch} = store;
 
-            if (type === WS_CONNECTION_START) {
-                socket = new WebSocket(wsUrl);
+            if (actions.wsConnect.match(action)) {
+                if (socket !== null) {
+                    socket.close();
+                }
+                socket = new WebSocket(action.payload.url);
+                socket.onmessage = (event: MessageEvent<string>) => {
+                    dispatch(setFeed(event.data));
+                }
+                socket.onopen = () => {
+                    dispatch(setFeed('{}'));
+                    console.info('Websocket opened');
+                }
+                socket.onclose = () => {
+                    console.info('Websocket closed');
+                }
+            } else if (actions.wsDisconnect.match(action)) {
+                if (socket !== null) {
+                    socket.close();
+                }
             }
-            if (socket) {
-                socket.onmessage = event => {
-                    dispatch(setFeed(event.data))
-                };
-            }
-
 
             next(action);
         }
-    }) as Middleware;
-
+    }
 }

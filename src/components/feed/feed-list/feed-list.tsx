@@ -15,7 +15,7 @@ const FeedList = () => {
                   to={`/feed/${element._id}`}
                 state={{ background: location}}
             >
-                <li key={element._id}>
+                <li key={element.number}>
                     <FeedItem {...element} isStatusDisplay={false} />
                 </li>
             </Link>

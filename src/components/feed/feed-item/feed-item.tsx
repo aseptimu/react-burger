@@ -23,10 +23,10 @@ const FeedItem = ({number, updatedAt, status, ingredients, isStatusDisplay}: TOr
         case 'done':
             statusDisplayableName = 'Выполнен'
             break;
-        case 'cancel'://TODO:
-            statusDisplayableName = 'Отменён'
+        case 'created':
+            statusDisplayableName = 'Создан'
             break;
-        case 'pending'://TODO:
+        case 'pending':
             statusDisplayableName = 'Готовится'
     }
 

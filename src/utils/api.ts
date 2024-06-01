@@ -13,11 +13,16 @@ export const fetchIngredientRequest = async (ingredientId?: string) => {
 }
 
 export const orderCheckoutRequest = async (order: string[]) => {
+    const accessToken = localStorage.getItem('accessToken');
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json;charset=utf-8'
+    };
+    if (accessToken) {
+        headers['authorization'] = accessToken;
+    }
     const response = await fetchWithRefresh(`${BASE_URL}/orders`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
+        headers: headers,
         body: JSON.stringify({
             ingredients: order
         })
