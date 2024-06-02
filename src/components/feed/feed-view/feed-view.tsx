@@ -30,7 +30,7 @@ const FeedView = () => {
         allIngredients?.find((ingredient) => ingredient._id === id)
     ));
 
-    const price = orderIngredients?.reduce((acc, curr) => acc + curr!.price, 0)
+    const price = orderIngredients?.reduce((acc, curr) => acc + (curr ? curr.price : 0), 0)
 
     let statusDisplayableName = '';
     switch (order?.status) {
@@ -45,9 +45,12 @@ const FeedView = () => {
     }
 
     const reducedIngredients = orderIngredients?.reduce((acc, curr) => {
-        const key = curr!._id
+        if (curr === undefined) {
+            return acc;
+        }
+        const key = curr._id
         if (!(key in acc)) {
-            acc[key] = {...curr!, counter: 0};
+            acc[key] = {...curr, counter: 0};
         }
         acc[key].counter += 1;
         return acc;

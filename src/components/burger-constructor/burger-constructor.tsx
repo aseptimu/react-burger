@@ -36,7 +36,7 @@ function BurgerConstructor() {
             const completeIngredientIds = bunId ? ingredientIds.concat(bunId, bunId) : ingredientIds;
             dispatch(orderCheckout(completeIngredientIds))
                 .then(response => {
-                    if (response.payload.number) {
+                    if (response?.payload?.number) {
                         dispatch(clearConstructor())
                     }
                 })

@@ -6,8 +6,14 @@ export const orderCheckout = createAsyncThunk(
     orderCheckoutRequest
 )
 
-const initialState: {number: string | null} = {
+type TOrder = {
+    readonly number: string | null;
+    readonly isOrderInProgress: boolean;
+}
+
+const initialState: TOrder = {
     number: null,
+    isOrderInProgress: false,
 }
 
 const orderDetailsSlice = createSlice({
@@ -17,13 +23,16 @@ const orderDetailsSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(orderCheckout.pending, (state) => {
             state.number = null;
+            state.isOrderInProgress = true;
         })
         builder.addCase(orderCheckout.fulfilled, (state, action) => {
             state.number = action.payload?.number;
+            state.isOrderInProgress = false;
         })
         builder.addCase(orderCheckout.rejected, (state, action) => {
             state.number = null;
             state.number = 'Error';
+            state.isOrderInProgress = false;
             console.error("Error fetching ingredients\n", action.payload)
         })
     }

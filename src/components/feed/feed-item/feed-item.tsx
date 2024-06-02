@@ -16,7 +16,7 @@ const FeedItem = ({number, updatedAt, status, ingredients, isStatusDisplay}: TOr
     const displayItems = orderIngredients.slice(0, MAX_DISPLAYABLE_ITEMS);
     const totalElements = orderIngredients.length || 0;
 
-    const price = orderIngredients.reduce((acc, curr) => acc + curr!.price, 0)
+    const price = orderIngredients.reduce((acc, curr) => acc + (curr ? curr.price : 0), 0)
 
     let statusDisplayableName = '';
     switch (status) {
