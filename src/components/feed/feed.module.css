@@ -1,0 +1,13 @@
+.feed__main {
+    max-width: 1400px;
+    margin: auto;
+}
+
+.feed__heading {
+    composes: text text_type_main-large mb-5 mt-10 from global;
+}
+
+.feed_section {
+    display: flex;
+    gap: 60px;
+}
