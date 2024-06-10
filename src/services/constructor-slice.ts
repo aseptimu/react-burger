@@ -1,12 +1,12 @@
 import {createSlice, nanoid, PayloadAction} from "@reduxjs/toolkit";
 import {TIngredient, TIngredients} from "../utils/types";
 
-type TDragAndDropIndexes = {
+export type TDragAndDropIndexes = {
     dragIndex: number;
     hoverIndex: number;
 };
 
-type TDragAndDropIngredient = {
+export type TDragAndDropIngredient = {
     ingredient: TIngredient;
     hoverIndex?: number;
 }
@@ -25,6 +25,7 @@ const constructorSlice = createSlice({
         },
         moveIngredient: (state, action: PayloadAction<TDragAndDropIndexes>) => {
             const { dragIndex, hoverIndex } = action.payload;
+            console.log(action.payload)
             const dragIngredient = state.ingredients[dragIndex];
             state.ingredients.splice(dragIndex, 1);
             state.ingredients.splice(hoverIndex, 0, dragIngredient);
