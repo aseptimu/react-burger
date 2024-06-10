@@ -1,4 +1,5 @@
 import reducer, {authUser, getUser, registerUser, TUserState, updateUser, userLogout} from '../user-slice';
+import { expect } from '@jest/globals';
 
 const initialState: TUserState = {
     name: '',

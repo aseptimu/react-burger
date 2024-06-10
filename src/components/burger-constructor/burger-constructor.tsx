@@ -49,7 +49,7 @@ function BurgerConstructor() {
     }
 
     return (
-        <section className={`${styles.constructor__section}`}>
+        <section className={`constructor ${styles.constructor__section}`}>
             <ConstructorBun bun={constructor.bun} type={"top"}/>
             <ul className={`${styles.constructor__list}`}>
                 <ConstructorIngredients ingredients={constructor.ingredients}/>

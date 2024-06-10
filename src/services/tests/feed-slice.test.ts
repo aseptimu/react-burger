@@ -1,4 +1,5 @@
 import reducer, {setFeed} from '../feed-slice';
+import { expect } from '@jest/globals';
 
 describe('feed reducers test', () => {
     it('should return the initial state', () => {

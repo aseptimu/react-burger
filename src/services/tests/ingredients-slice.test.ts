@@ -1,5 +1,6 @@
 import reducer, {fetchIngredients} from "../ingredients-slice";
 import {mockIngredient} from "./constants";
+import { expect, jest } from '@jest/globals';
 
 const initialState = {
     ingredients: [],
