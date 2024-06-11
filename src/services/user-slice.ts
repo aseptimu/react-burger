@@ -58,7 +58,7 @@ export type TAuthData = {
     }
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
     name: '',
     email: '',
     isAuthorized: false,

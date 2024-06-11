@@ -1,12 +1,5 @@
-import reducer, {authUser, getUser, registerUser, TUserState, updateUser, userLogout} from '../user-slice';
-import { expect } from '@jest/globals';
-
-const initialState: TUserState = {
-    name: '',
-    email: '',
-    isAuthorized: false,
-    isAuthInProgress: false,
-};
+import reducer, {authUser, getUser, initialState, registerUser, updateUser, userLogout} from '../user-slice';
+import {expect} from '@jest/globals';
 
 const mockEmail = 'test@test.ru';
 const mockPassword = 'password';

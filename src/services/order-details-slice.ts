@@ -11,7 +11,7 @@ export type TOrder = {
     readonly isOrderInProgress: boolean;
 }
 
-const initialState: TOrder = {
+export const initialState: TOrder = {
     number: null,
     isOrderInProgress: false,
 }

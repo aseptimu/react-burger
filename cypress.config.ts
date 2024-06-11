@@ -5,6 +5,8 @@ export default defineConfig({
     setupNodeEvents() {
       // implement node event listeners here
     },
-    supportFile: false,
+    supportFile: 'cypress/support/e2e',
+    baseUrl: 'http://158.160.89.236/',
+    fixturesFolder: false,
   },
 });

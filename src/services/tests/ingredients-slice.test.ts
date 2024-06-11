@@ -1,10 +1,7 @@
-import reducer, {fetchIngredients} from "../ingredients-slice";
+import reducer, {fetchIngredients, initialState} from "../ingredients-slice";
 import {mockIngredient} from "./constants";
 import { expect, jest } from '@jest/globals';
 
-const initialState = {
-    ingredients: [],
-}
 describe('ingredients slice', () => {
     it('should console info on "pending"', () => {
         const logSpy = jest.spyOn(console, 'info').mockImplementation(() => {});

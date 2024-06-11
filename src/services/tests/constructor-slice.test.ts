@@ -1,5 +1,6 @@
 import reducer, {
     clearConstructor,
+    initialState,
     moveIngredient,
     removeIngredient,
     setBun,
@@ -8,12 +9,7 @@ import reducer, {
 } from '../constructor-slice';
 import {TIngredient} from "../../utils/types";
 import {mockIngredient} from "./constants";
-import { expect } from '@jest/globals';
-
-const initialState = {
-    bun: null,
-    ingredients: [],
-}
+import {expect} from '@jest/globals';
 
 describe('constructor reducers test', () => {
     it('should return the initial state', () => {

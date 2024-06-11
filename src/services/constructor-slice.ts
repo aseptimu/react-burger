@@ -11,7 +11,7 @@ export type TDragAndDropIngredient = {
     hoverIndex?: number;
 }
 
-const initialState: TIngredients & {bun: TIngredient | null } = {
+export const initialState: TIngredients & {bun: TIngredient | null } = {
     bun: null,
     ingredients: [],
 };

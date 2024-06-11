@@ -1,7 +1,7 @@
 export {}
 describe('tests for burger constructor', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:3000');
+        cy.visit('');
     })
     it('drag & drop and create order', () => {
         // @ts-ignore
@@ -18,9 +18,8 @@ describe('tests for burger constructor', () => {
 
         cy.get('body').then(body => {
             if (body.find('form').length > 0) {
-                cy.get('input[name="email"]').type('lold@mail.ru');
-                cy.get('input[name="password"]').type('lol');
-                cy.get('button[type="submit"]').click();
+                // @ts-ignore
+                cy.login('lold@mail.ru', 'lol');
                 cy.get('button').contains('Оформить заказ').click();
             }
         })

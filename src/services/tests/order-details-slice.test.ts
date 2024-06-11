@@ -1,11 +1,7 @@
-import reducer, {orderCheckout, TOrder} from '../order-details-slice';
+import reducer, {initialState, orderCheckout} from '../order-details-slice';
 import {mockIngredient} from "./constants";
-import { expect, jest } from '@jest/globals';
+import {expect, jest} from '@jest/globals';
 
-const initialState: TOrder = {
-    number: null,
-    isOrderInProgress: false,
-}
 describe('order details', () => {
     it('should set pending state', () => {
         const store = reducer(initialState, orderCheckout.pending('', [mockIngredient._id]));
