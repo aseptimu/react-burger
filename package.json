@@ -25,8 +25,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "gh-pages -d build",
+    "deploy-script": "npm run build && scp -r ./build/* aseptimu@158.160.89.236:/home/aseptimu/stellar-frontend",
+    "predeploy": "npm run build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:cypress": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -45,5 +49,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cypress": "^13.11.0",
+    "eslint-plugin-cypress": "^3.3.0",
+    "gh-pages": "^6.1.1"
   }
 }

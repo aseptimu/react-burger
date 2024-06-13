@@ -78,7 +78,7 @@ function BurgerIngredients() {
                     Начинки
                 </Tab>
             </div>
-            <section className={styles.ingredients__section} ref={containerRef} onScroll={handleScroll}>
+            <section className={`ingredients ${styles.ingredients__section}`} ref={containerRef} onScroll={handleScroll}>
                 <IngredientsGroup allIngredients={ingredients} counters={ingredientsCounter} type={'bun'} typeName={"Булки"} ref={ingredientRefs.bun}/>
                 <IngredientsGroup allIngredients={ingredients} counters={ingredientsCounter} type={'sauce'} typeName={"Соусы"} ref={ingredientRefs.sauce}/>
                 <IngredientsGroup allIngredients={ingredients} counters={ingredientsCounter} type={'main'} typeName={"Начинки"} ref={ingredientRefs.main}/>

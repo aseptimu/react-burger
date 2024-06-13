@@ -6,12 +6,12 @@ export const orderCheckout = createAsyncThunk(
     orderCheckoutRequest
 )
 
-type TOrder = {
+export type TOrder = {
     readonly number: string | null;
     readonly isOrderInProgress: boolean;
 }
 
-const initialState: TOrder = {
+export const initialState: TOrder = {
     number: null,
     isOrderInProgress: false,
 }
